@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "sync": "node scripts/sync-notion.mjs",
-    "check": "astro check"
+    "sync": "node scripts/sync-notion.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

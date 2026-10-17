@@ -11,7 +11,7 @@ const base = process.env.BASE || '/';
 export default defineConfig({
   site,
   base,
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   integrations: [sitemap()],
   build: { inlineStylesheets: 'always' },
   image: { layout: 'constrained', responsiveStyles: true },
