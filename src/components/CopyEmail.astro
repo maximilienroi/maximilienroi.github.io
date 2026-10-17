@@ -1,0 +1,70 @@
+---
+interface Props {
+  email: string;
+  label: string;
+  done: string;
+  solid?: boolean;
+}
+
+const { email, label, done, solid = false } = Astro.props;
+---
+
+<a
+  class:list={['button', 'copy-email', { 'button--solid': solid }]}
+  href={`mailto:${email}`}
+  data-email={email}
+  data-done={done}
+>
+  <span class="copy-label">{label}</span>
+</a>
+
+<script>
+  // Without JavaScript this stays a normal mailto link.
+  for (const el of document.querySelectorAll<HTMLAnchorElement>('.copy-email')) {
+    const label = el.querySelector<HTMLElement>('.copy-label')!;
+    const original = label.textContent;
+    let timer: number | undefined;
+
+    el.addEventListener('click', async (event) => {
+      if (!navigator.clipboard) return;
+      event.preventDefault();
+      try {
+        await navigator.clipboard.writeText(el.dataset.email!);
+      } catch {
+        window.location.href = el.href;
+        return;
+      }
+      label.textContent = el.dataset.done!;
+      el.classList.add('is-done');
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        label.textContent = original;
+        el.classList.remove('is-done');
+      }, 1800);
+    });
+  }
+</script>
+
+<style>
+  .copy-email {
+    /* Keep the width steady when the label changes. */
+    min-width: 8.5rem;
+  }
+
+  .copy-label {
+    transition:
+      opacity 200ms ease,
+      filter 200ms ease;
+  }
+
+  .copy-email.is-done .copy-label {
+    animation: swap 260ms var(--ease-out);
+  }
+
+  @keyframes swap {
+    from {
+      opacity: 0.2;
+      filter: blur(2px);
+    }
+  }
+</style>

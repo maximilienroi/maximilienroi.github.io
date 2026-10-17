@@ -1,0 +1,140 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  ui: { play: string; pause: string };
+}
+
+const { src, title, ui } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const url = /^https?:\/\//.test(src) ? src : `${base}${src.replace(/^\/?(public\/)?/, '')}`;
+---
+
+<div class="player" data-play={ui.play} data-pause={ui.pause}>
+  <button class="player-button button" type="button" aria-label={`${ui.play}: ${title}`}>
+    <svg class="player-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path class="icon-play" d="M4 2.5v11l9-5.5z"></path>
+      <path class="icon-pause" d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"></path>
+    </svg>
+  </button>
+  <div class="player-track">
+    <input class="player-seek" type="range" min="0" max="1000" value="0" step="1" aria-label={`Position in ${title}`} />
+    <span class="player-time ui soft">0:00</span>
+  </div>
+  <audio src={url} preload="none"></audio>
+</div>
+
+<script>
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  const players = [...document.querySelectorAll<HTMLElement>('.player')];
+
+  for (const el of players) {
+    const audio = el.querySelector('audio')!;
+    const button = el.querySelector<HTMLButtonElement>('.player-button')!;
+    const seek = el.querySelector<HTMLInputElement>('.player-seek')!;
+    const time = el.querySelector<HTMLElement>('.player-time')!;
+    const name = button.getAttribute('aria-label')!.split(': ').slice(1).join(': ');
+
+    const sync = () => {
+      const playing = !audio.paused;
+      el.classList.toggle('is-playing', playing);
+      button.setAttribute('aria-label', `${playing ? el.dataset.pause : el.dataset.play}: ${name}`);
+    };
+
+    button.addEventListener('click', () => {
+      if (audio.paused) {
+        // Only one track at a time.
+        for (const other of players) if (other !== el) other.querySelector('audio')!.pause();
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+    audio.addEventListener('play', sync);
+    audio.addEventListener('pause', sync);
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      seek.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+      seek.style.setProperty('--progress', `${(audio.currentTime / audio.duration) * 100}%`);
+      time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+    });
+    seek.addEventListener('input', () => {
+      if (audio.duration) audio.currentTime = (Number(seek.value) / 1000) * audio.duration;
+    });
+  }
+</script>
+
+<style>
+  .player {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1rem;
+    max-width: 30rem;
+  }
+
+  .player-button {
+    width: 2.875rem;
+    padding: 0;
+    flex: none;
+  }
+
+  .player-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: currentColor;
+  }
+
+  .icon-pause,
+  .player.is-playing .icon-play {
+    display: none;
+  }
+
+  .player.is-playing .icon-pause {
+    display: block;
+  }
+
+  .player-track {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .player-seek {
+    --progress: 0%;
+    flex: 1;
+    height: 2rem;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .player-seek::-webkit-slider-runnable-track {
+    height: 3px;
+    background: linear-gradient(to right, var(--violet) var(--progress), var(--rule) var(--progress));
+  }
+
+  .player-seek::-moz-range-track {
+    height: 3px;
+    background: linear-gradient(to right, var(--violet) var(--progress), var(--rule) var(--progress));
+  }
+
+  .player-seek::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    margin-top: -4.5px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .player-seek::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+</style>

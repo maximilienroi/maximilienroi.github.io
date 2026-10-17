@@ -1,0 +1,68 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  label: string;
+}
+
+const { src, title, label } = Astro.props;
+const embed = new URL(src.replace('open.spotify.com/', 'open.spotify.com/embed/').replace('/embed/embed/', '/embed/'));
+embed.searchParams.set('utm_source', 'generator');
+---
+
+<div class="spotify" data-src={embed.href} data-title={`${title} on Spotify`}>
+  <button class="button button--solid spotify-load" type="button">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"></path></svg>
+    {label}
+  </button>
+</div>
+
+<script>
+  // Spotify's player is heavy, so it only loads when asked for.
+  for (const el of document.querySelectorAll<HTMLElement>('.spotify')) {
+    el.querySelector('button')!.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = el.dataset.src!;
+      frame.title = el.dataset.title!;
+      frame.height = '352';
+      frame.loading = 'lazy';
+      frame.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      frame.addEventListener('load', () => el.classList.add('is-loaded'));
+      el.replaceChildren(frame);
+      el.classList.add('is-open');
+      frame.focus();
+    });
+  }
+</script>
+
+<style>
+  .spotify {
+    margin-top: 1.25rem;
+  }
+
+  .spotify-load svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-right: 0.55rem;
+    fill: currentColor;
+  }
+
+  .spotify :global(iframe) {
+    width: 100%;
+    max-width: 36rem;
+    height: 352px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--wash);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 300ms ease,
+      transform 300ms var(--ease-out);
+  }
+
+  .spotify.is-loaded :global(iframe) {
+    opacity: 1;
+    transform: none;
+  }
+</style>

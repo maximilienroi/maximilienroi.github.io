@@ -1,0 +1,93 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Photo from './Photo.astro';
+
+interface Props {
+  items: CollectionEntry<'log'>[];
+  lang: string;
+}
+
+const { items, lang } = Astro.props;
+const fmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang, {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const rows = await Promise.all(items.map(async (item) => ({ item, ...(await render(item)) })));
+---
+
+<ol class="log">
+  {
+    rows.map(({ item, Content }) => (
+      <li class:list={['log-row', { 'log-row--media': item.data.image }]}>
+        <time class="log-date ui soft" datetime={item.data.date.toISOString().slice(0, 10)}>
+          {item.data.dateLabel ?? fmt.format(item.data.date).replace('Sept', 'Sep')}
+        </time>
+        <div class="log-text">
+          <Content />
+          {item.data.link && (
+            <a class="log-link ui" href={item.data.link.url}>
+              {item.data.link.label}
+            </a>
+          )}
+        </div>
+        {item.data.image && (
+          <div class="log-media">
+            <Photo image={item.data.image} alt={item.data.imageAlt ?? ''} sizes="(max-width: 36rem) 100vw, 12rem" />
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .log {
+    max-width: 52rem;
+  }
+
+  .log-row {
+    display: grid;
+    grid-template-columns: var(--dates) minmax(0, 1fr);
+    column-gap: 1.5rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .log-row:first-child {
+    padding-top: 0;
+  }
+
+  .log-row--media {
+    grid-template-columns: var(--dates) minmax(0, 1fr) 9rem;
+  }
+
+  .log-date {
+    padding-top: 0.2rem;
+  }
+
+  .log-text {
+    max-width: 36rem;
+    text-wrap: pretty;
+  }
+
+  .log-link {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-weight: 550;
+  }
+
+  @media (max-width: 36rem) {
+    .log-row,
+    .log-row--media {
+      grid-template-columns: 1fr;
+      row-gap: 0.15rem;
+    }
+    .log-media {
+      margin-top: 0.6rem;
+      max-width: 16rem;
+    }
+  }
+</style>
