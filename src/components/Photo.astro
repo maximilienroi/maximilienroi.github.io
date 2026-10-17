@@ -24,7 +24,8 @@ const large = await getImage({ src: image, width: Math.min(image.width, 1800), f
     if (dialog) return dialog;
     dialog = document.createElement('dialog');
     dialog.className = 'lightbox';
-    dialog.innerHTML = '<img alt="" /><form method="dialog"><button class="button lightbox-close">Close</button></form>';
+    dialog.innerHTML = '<form method="dialog"><button class="button lightbox-close">Close</button></form>';
+    dialog.prepend(document.createElement('img'));
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) dialog!.close();
     });

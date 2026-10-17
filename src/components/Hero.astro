@@ -4,6 +4,7 @@ import CopyEmail from './CopyEmail.astro';
 interface Props {
   site: {
     name: string;
+    artistName: string;
     intro: string;
     lookingFor: string;
     email: string;
@@ -24,7 +25,8 @@ const [first, ...rest] = site.name.split(' ');
   </h1>
 
   <div class="hero-body">
-    <p class="hero-artist" aria-label="Also known as MAXRØ">
+    <p class="hero-artist">
+      <span class="visually-hidden">{site.artistName}</span>
       <span aria-hidden="true">MAXR<span class="slashed">O</span></span>
     </p>
     <div class="hero-text">
