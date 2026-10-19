@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #121018 } .o { stroke: #edebf2 } .s { stroke: #a796ff }
+    @media (prefers-color-scheme: light) { .bg { fill: #15121c } }
+  </style>
+  <rect class="bg" width="64" height="64" rx="14"/>
+  <ellipse class="o" cx="32" cy="32" rx="15" ry="18" fill="none" stroke-width="7"/>
+  <line class="s" x1="19" y1="53" x2="45" y2="11" stroke-width="6.5" stroke-linecap="butt"/>
+</svg>

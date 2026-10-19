@@ -1,0 +1,84 @@
+{
+  "lang": "en",
+  "name": "Maximilien Roi",
+  "artistName": "MAXRØ",
+  "title": "Maximilien Roi (MAXRØ), pianist and producer in London",
+  "description": "Pianist and producer in London, studying Music Production, Performance and Business at the University of Westminster. Looking for part-time work or an internship.",
+  "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster.",
+  "lookingFor": "I'm looking for part-time work or an internship as a studio assistant, producer, piano teacher, or in social media or events.",
+  "email": "maximilienroi@icloud.com",
+  "phone": "+44 7754 863571",
+  "phoneNote": "work number",
+  "location": "London",
+  "languages": "French (native), English (fluent), some Spanish and Russian.",
+  "cvNote": "CV available on request.",
+  "listen": {
+    "label": "Listen on Spotify",
+    "url": "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy"
+  },
+  "linkedin": "https://www.linkedin.com/in/maximilien-roi/",
+  "socials": [
+    {
+      "label": "Spotify",
+      "url": "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy"
+    },
+    {
+      "label": "SoundCloud",
+      "url": "https://soundcloud.com/max-86804891"
+    },
+    {
+      "label": "TikTok",
+      "url": "https://www.tiktok.com/@maxro_cactus"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/maxro_cactus/"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@maxro_cactus"
+    }
+  ],
+  "sections": {
+    "production": {
+      "title": "Production",
+      "intro": "I work in Logic Pro and FL Studio, and do my own MIDI programming and mixing. I also do live sound."
+    },
+    "piano": {
+      "title": "Piano & teaching",
+      "intro": ""
+    },
+    "social": {
+      "title": "Social media",
+      "intro": ""
+    },
+    "society": {
+      "title": "Music Society & events",
+      "intro": "I'm President and founder of the Westminster Music Society, with Jasper Hazell as Vice-President and Bradley Fletcher as Treasurer. I started it to get music students from different years and courses working together. This is what we've done so far, newest first."
+    },
+    "also": {
+      "title": "Also",
+      "intro": ""
+    },
+    "contact": {
+      "title": "Contact",
+      "intro": ""
+    }
+  },
+  "ui": {
+    "copyEmail": "Copy email",
+    "copied": "Copied",
+    "linkedin": "LinkedIn",
+    "universityProject": "university project",
+    "playHere": "Play on this page",
+    "closePhoto": "Close",
+    "play": "Play",
+    "pause": "Pause",
+    "education": "Education",
+    "skip": "Skip to content",
+    "phone": "Phone",
+    "basedIn": "Based in",
+    "languages": "Languages",
+    "elsewhere": "Elsewhere"
+  }
+}

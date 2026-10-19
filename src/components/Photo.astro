@@ -1,0 +1,122 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  sizes?: string;
+}
+
+const { image, alt, sizes = '(max-width: 36rem) 100vw, 17rem' } = Astro.props;
+const large = await getImage({ src: image, width: Math.min(image.width, 1800), format: 'webp' });
+---
+
+<button class="photo" type="button" data-full={large.src} data-alt={alt} aria-label={`Open photo: ${alt}`}>
+  <Image src={image} alt={alt} widths={[400, 700, 1000]} sizes={sizes} loading="lazy" decoding="async" />
+</button>
+
+<script>
+  // One shared <dialog> opens any photo larger.
+  let dialog: HTMLDialogElement | null = null;
+
+  function getDialog() {
+    if (dialog) return dialog;
+    dialog = document.createElement('dialog');
+    dialog.className = 'lightbox';
+    dialog.innerHTML = '<form method="dialog"><button class="button lightbox-close">Close</button></form>';
+    dialog.prepend(document.createElement('img'));
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog!.close();
+    });
+    document.body.append(dialog);
+    return dialog;
+  }
+
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('.photo')) {
+    btn.addEventListener('click', () => {
+      const d = getDialog();
+      const img = d.querySelector('img')!;
+      img.src = btn.dataset.full!;
+      img.alt = btn.dataset.alt ?? '';
+      d.showModal();
+    });
+  }
+</script>
+
+<style>
+  .photo {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: var(--wash);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: zoom-in;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .photo:active {
+    transform: scale(0.98);
+  }
+
+  .photo :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  :global(.lightbox) {
+    max-width: min(92vw, 1400px);
+    max-height: 92vh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  :global(.lightbox img) {
+    max-height: 84vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 3px;
+  }
+
+  :global(.lightbox form) {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+  }
+
+  :global(.lightbox .lightbox-close) {
+    color: #edebf2;
+    border-color: #edebf2;
+  }
+
+  :global(.lightbox::backdrop) {
+    background: rgb(10 8 14 / 0.88);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.lightbox[open]) {
+      animation: photo-open 240ms var(--ease-out);
+    }
+    :global(.lightbox[open]::backdrop) {
+      animation: photo-fade 240ms ease;
+    }
+  }
+
+  @keyframes photo-open {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes photo-fade {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import SocietyLog from './SocietyLog.astro';
+import Contact from './Contact.astro';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const site = (await import(`../content/site/${lang}.json`)).default;
+const ui = site.ui;
+
+// Files sit in a folder per language: entries/en/..., log/en/...
+const inLang = (id: string) => id.startsWith(`${lang}/`);
+
+const entries = (await getCollection('entries', (e) => inLang(e.id) && !e.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || b.data.sortDate.valueOf() - a.data.sortDate.valueOf(),
+);
+const bySection = (s: string) => entries.filter((e) => e.data.section === s);
+
+const log = (await getCollection('log', (e) => inLang(e.id) && !e.data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const s = site.sections;
+const year = new Date().getFullYear();
+---
+
+<Base lang={lang} title={site.title} description={site.description} name={site.name} socials={site.socials}>
+  <a class="skip-link" href="#main">{ui.skip}</a>
+  <div class="page">
+    <Hero site={site} />
+
+    <main id="main">
+      {
+        (['production', 'piano', 'social'] as const).map((key) => {
+          const items = bySection(key);
+          return (
+            items.length > 0 && (
+              <Section id={key} title={s[key].title} intro={s[key].intro}>
+                {items.map((entry) => (
+                  <Entry entry={entry} ui={ui} />
+                ))}
+              </Section>
+            )
+          );
+        })
+      }
+
+      {
+        log.length > 0 && (
+          <Section id="society" title={s.society.title} intro={s.society.intro}>
+            <SocietyLog items={log} lang={lang} />
+          </Section>
+        )
+      }
+
+      <Section id="also" title={s.also.title} intro={s.also.intro}>
+        {bySection('also').map((entry) => <Entry entry={entry} ui={ui} compact />)}
+        {
+          bySection('education').length > 0 && (
+            <>
+              <h3 class="subhead">{ui.education}</h3>
+              {bySection('education').map((entry) => (
+                <Entry entry={entry} ui={ui} compact />
+              ))}
+            </>
+          )
+        }
+      </Section>
+
+      <Section id="contact" title={s.contact.title} intro={s.contact.intro}>
+        <Contact site={site} />
+      </Section>
+    </main>
+
+    <footer class="footer ui soft">
+      <p>© {year} {site.name}</p>
+      <p>{site.artistName}</p>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .subhead {
+    margin: clamp(2.75rem, 5vw, 3.75rem) 0 1.5rem;
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    font-stretch: 112%;
+    color: var(--ink-soft);
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+</style>

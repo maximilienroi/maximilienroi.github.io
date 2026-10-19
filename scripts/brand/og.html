@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Archivo'; font-weight: 100 900; font-stretch: 62% 125%;
+    src: url('../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2') format('woff2-variations'); }
+  @font-face { font-family: 'Newsreader'; font-weight: 200 800;
+    src: url('../../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2') format('woff2-variations'); }
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; background: #121018; color: #edebf2; box-sizing: border-box;
+    padding: 64px 72px; display: flex; flex-direction: column; justify-content: space-between; }
+  h1 { margin: 0; font: 800 150px/0.84 'Archivo'; font-stretch: 125%; letter-spacing: -0.025em; margin-left: -6px; }
+  .row { display: flex; align-items: baseline; gap: 48px; }
+  .artist { font: 700 44px/1 'Archivo'; font-stretch: 118%; letter-spacing: 0.01em; }
+  .slashed { position: relative; display: inline-block; }
+  .slashed::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.12em; height: 1.12em;
+    margin: -0.56em 0 0 -0.06em; background: #a796ff; transform: rotate(38deg); }
+  p { margin: 0; font: 400 32px/1.35 'Newsreader'; color: #c9c5d3; max-width: 760px; }
+</style>
+</head>
+<body>
+  <h1>Maximilien<br>Roi</h1>
+  <div class="row">
+    <span class="artist">MAXR<span class="slashed">O</span></span>
+    <p>Pianist and producer in London. Music Production, Performance and Business at the University of Westminster.</p>
+  </div>
+</body>
+</html>

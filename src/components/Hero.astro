@@ -1,0 +1,190 @@
+---
+import CopyEmail from './CopyEmail.astro';
+
+interface Props {
+  site: {
+    name: string;
+    artistName: string;
+    intro: string;
+    lookingFor: string;
+    email: string;
+    linkedin: string;
+    listen: { label: string; url: string };
+    ui: { copyEmail: string; copied: string; linkedin: string };
+  };
+}
+
+const { site } = Astro.props;
+const [first, ...rest] = site.name.split(' ');
+---
+
+<header class="hero">
+  <h1 class="hero-name">
+    <span class="hero-line">{first}</span>
+    <span class="hero-line">{rest.join(' ')}</span>
+  </h1>
+
+  <div class="hero-body">
+    <p class="hero-artist">
+      <span class="visually-hidden">{site.artistName}</span>
+      <span aria-hidden="true">MAXR<span class="slashed">O</span></span>
+    </p>
+    <div class="hero-text">
+      <p class="hero-intro">{site.intro}</p>
+      <p class="hero-intro">{site.lookingFor}</p>
+      <div class="hero-actions">
+        <CopyEmail email={site.email} label={site.ui.copyEmail} done={site.ui.copied} solid />
+        <a class="button" href={site.linkedin} rel="me">{site.ui.linkedin}</a>
+        <a class="button" href={site.listen.url} rel="me">{site.listen.label}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 7vw, 6rem) clamp(4rem, 10vw, 8.5rem);
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: var(--name);
+    font-weight: 800;
+    font-stretch: 125%;
+    line-height: 0.84;
+    letter-spacing: -0.025em;
+    margin-left: -0.06em;
+    font-kerning: normal;
+  }
+
+  .hero-line {
+    display: block;
+  }
+
+  .hero-body {
+    display: grid;
+    grid-template-columns: var(--rail) 8fr;
+    column-gap: var(--gutter);
+    margin-top: clamp(2rem, 4.5vw, 3.75rem);
+  }
+
+  .hero-artist {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 700;
+    font-stretch: 118%;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
+  /* The Ø is drawn as an O plus a slash, so the slash can be drawn in. */
+  .slashed {
+    position: relative;
+    display: inline-block;
+    line-height: 0.72;
+  }
+
+  .slashed::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.105em;
+    height: 0.98em;
+    background: var(--violet);
+    transform: translate(-50%, -50%) rotate(36deg);
+  }
+
+  .hero-text {
+    max-width: 38rem;
+  }
+
+  .hero-intro {
+    font-size: var(--step-1);
+    line-height: 1.42;
+    text-wrap: pretty;
+  }
+
+  .hero-intro + .hero-intro {
+    margin-top: 0.6em;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 52rem) {
+    .hero-body {
+      grid-template-columns: 1fr;
+      row-gap: 1.25rem;
+    }
+  }
+
+  /* The one orchestrated moment: the name opens up like a fader,
+     then the slash of the Ø is drawn, then the rest settles in. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-name {
+      animation: open-up 900ms var(--ease-out) both;
+    }
+    .hero-line + .hero-line {
+      animation: open-up 900ms var(--ease-out) 70ms both;
+    }
+    .hero-artist {
+      animation: arrive 500ms var(--ease-out) 420ms both;
+    }
+    .slashed::after {
+      animation: draw 380ms var(--ease-in-out) 700ms both;
+    }
+    .hero-text > * {
+      animation: arrive 500ms var(--ease-out) both;
+    }
+    .hero-text > :nth-child(1) {
+      animation-delay: 560ms;
+    }
+    .hero-text > :nth-child(2) {
+      animation-delay: 620ms;
+    }
+    .hero-text > :nth-child(3) {
+      animation-delay: 700ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-text,
+    .hero-artist {
+      animation: fade 400ms ease both;
+    }
+  }
+
+  @keyframes open-up {
+    from {
+      font-stretch: 62%;
+    }
+  }
+
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  /* Clip in the bar's own space, so it is drawn from the bottom up. */
+  @keyframes draw {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import CopyEmail from './CopyEmail.astro';
+
+interface Props {
+  site: {
+    email: string;
+    phone: string;
+    phoneNote: string;
+    linkedin: string;
+    location: string;
+    languages: string;
+    cvNote: string;
+    socials: { label: string; url: string }[];
+    ui: { copyEmail: string; copied: string; linkedin: string; phone: string; basedIn: string; languages: string; elsewhere: string };
+  };
+}
+
+const { site } = Astro.props;
+---
+
+<div class="contact">
+  <a class="contact-email" href={`mailto:${site.email}`}>{site.email}</a>
+
+  <div class="contact-actions">
+    <CopyEmail email={site.email} label={site.ui.copyEmail} done={site.ui.copied} solid />
+    <a class="button" href={site.linkedin} rel="me">{site.ui.linkedin}</a>
+  </div>
+
+  <dl class="contact-details">
+    <div>
+      <dt class="ui soft">{site.ui.phone}</dt>
+      <dd>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>{' '}
+        <span class="soft">({site.phoneNote})</span>
+      </dd>
+    </div>
+    <div>
+      <dt class="ui soft">{site.ui.basedIn}</dt>
+      <dd>{site.location}</dd>
+    </div>
+    <div>
+      <dt class="ui soft">{site.ui.languages}</dt>
+      <dd>{site.languages}</dd>
+    </div>
+    <div>
+      <dt class="ui soft">{site.ui.elsewhere}</dt>
+      <dd>
+        <ul class="contact-socials">
+          {
+            site.socials.map((s) => (
+              <li>
+                <a href={s.url} rel="me">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </dd>
+    </div>
+  </dl>
+
+  <p class="contact-cv">{site.cvNote}</p>
+</div>
+
+<style>
+  .contact-email {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: clamp(1.45rem, 5.2vw, var(--step-4));
+    font-weight: 650;
+    font-stretch: 104%;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.14em;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+  }
+
+  .contact-details {
+    display: grid;
+    gap: 0.9rem;
+    margin: 2.75rem 0 0;
+    max-width: 44rem;
+  }
+
+  .contact-details > div {
+    display: grid;
+    grid-template-columns: var(--dates) minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  .contact-details dt {
+    padding-top: 0.2rem;
+  }
+
+  .contact-details dd {
+    margin: 0;
+  }
+
+  .contact-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+  }
+
+  .contact-socials a {
+    display: inline-block;
+    padding-block: 0.1rem;
+  }
+
+  .contact-cv {
+    margin-top: 2rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 36rem) {
+    .contact-details > div {
+      grid-template-columns: 1fr;
+    }
+    .contact-socials {
+      gap: 0.25rem 1.25rem;
+    }
+    .contact-socials a {
+      padding-block: 0.35rem;
+    }
+  }
+</style>

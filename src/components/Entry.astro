@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Photo from './Photo.astro';
+import Video from './Video.astro';
+import AudioPlayer from './AudioPlayer.astro';
+import SpotifyEmbed from './SpotifyEmbed.astro';
+
+interface Props {
+  entry: CollectionEntry<'entries'>;
+  ui: { universityProject: string; playHere: string; play: string; pause: string };
+  compact?: boolean;
+}
+
+const { entry, ui, compact = false } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const hasBody = Boolean(entry.body?.trim());
+const hasMedia = Boolean(d.image || d.video);
+const where = [d.where, d.university ? `(${ui.universityProject})` : null].filter(Boolean).join(' ');
+---
+
+<article class:list={['entry', { 'entry--media': hasMedia, 'entry--compact': compact }]}>
+  <p class="entry-dates ui soft">{d.dates}</p>
+
+  <div class="entry-main">
+    <h3 class="entry-title">{d.title}</h3>
+    {where && <p class="entry-where">{where}</p>}
+    {
+      hasBody && (
+        <div class="entry-body">
+          <Content />
+        </div>
+      )
+    }
+    {d.audio && <AudioPlayer src={d.audio} title={d.title} ui={ui} />}
+    {d.spotifyEmbed && <SpotifyEmbed src={d.spotifyEmbed} title={d.title} label={ui.playHere} />}
+    {
+      d.links.length > 0 && (
+        <ul class="entry-links ui">
+          {d.links.map((l) => (
+            <li>
+              <a href={l.url}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+
+  {
+    hasMedia && (
+      <div class="entry-media">
+        {d.video ? (
+          <Video src={d.video} poster={d.videoPoster} label={d.imageAlt ?? d.title} />
+        ) : (
+          d.image && <Photo image={d.image} alt={d.imageAlt ?? ''} />
+        )}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .entry {
+    display: grid;
+    grid-template-columns: var(--dates) minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  .entry + :global(.entry) {
+    margin-top: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .entry--compact + :global(.entry--compact) {
+    margin-top: 1.5rem;
+  }
+
+  .entry--media {
+    grid-template-columns: var(--dates) minmax(0, 1fr) minmax(0, 17rem);
+  }
+
+  .entry-dates {
+    padding-top: 0.42rem;
+  }
+
+  .entry-main {
+    max-width: 36rem;
+  }
+
+  .entry-title {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 650;
+    font-stretch: 108%;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .entry--compact .entry-title {
+    font-size: var(--step-1);
+    font-weight: 620;
+    line-height: 1.25;
+  }
+
+  .entry--compact .entry-dates {
+    padding-top: 0.2rem;
+  }
+
+  .entry-where {
+    margin-top: 0.3rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .entry-body {
+    margin-top: 0.75rem;
+    text-wrap: pretty;
+  }
+
+  .entry-body :global(p + p) {
+    margin-top: 0.6em;
+  }
+
+  .entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.9rem;
+    font-weight: 550;
+  }
+
+  .entry-links a {
+    display: inline-block;
+    padding-block: 0.4rem;
+  }
+
+  .entry-media {
+    align-self: start;
+  }
+
+  @media (max-width: 64rem) {
+    .entry--media {
+      grid-template-columns: var(--dates) minmax(0, 1fr);
+    }
+    .entry-media {
+      grid-column: 2;
+      margin-top: 1.25rem;
+      max-width: 28rem;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .entry,
+    .entry--media {
+      grid-template-columns: 1fr;
+    }
+    .entry-dates {
+      padding-top: 0;
+      margin-bottom: 0.35rem;
+    }
+    .entry-media {
+      grid-column: 1;
+      max-width: none;
+    }
+  }
+</style>
