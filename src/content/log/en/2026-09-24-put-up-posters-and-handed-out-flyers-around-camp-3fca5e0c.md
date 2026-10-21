@@ -1,4 +1,0 @@
----
-date: "2026-09-24"
----
-Put up posters and handed out flyers around campus.

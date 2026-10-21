@@ -10,6 +10,6 @@ links:
   - { label: "Instagram", url: "https://www.instagram.com/maxro_cactus/" }
   - { label: "YouTube", url: "https://www.youtube.com/@maxro_cactus" }
 ---
-Short piano and music theory videos, in series like "Steal these chords", "Learning jazz standards" and "Playing the most famous songs on this app". My best videos have passed 230,000 views.
+Piano and music theory videos in a few formats: the easiest chords for beginners, "Steal these chords", "Learning jazz standards", "Playing the most famous songs on this app", and a lot of my own compositions. My best videos have passed 230,000 views.
 
-I record in Logic Pro and edit in CapCut.
+Next, I want to make teaching videos on music theory and jazz harmony.

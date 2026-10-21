@@ -10,6 +10,6 @@ links:
   - { label: "Spotify", url: "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy" }
   - { label: "SoundCloud", url: "https://soundcloud.com/max-86804891" }
 ---
-My first release came out in March 2025, and everything is on the streaming platforms.
+I write, produce, mix and master my own music in Logic Pro. My releases so far are on all streaming platforms, including where?, Fl0at and Maman, je saigne, a single with my friend Gracie on vocals.
 
-Tracks include *Maman, je saigne* (2026 single, vocals by my friend Gracie), *Fl0at*, *where?* and *behind the fence*, which I started in the Applied Production module.
+I'm currently working on two projects, below.
