@@ -38,6 +38,8 @@ const log = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/log' }),
   schema: ({ image }) =>
     z.object({
+      title: z.string().optional(),
+      order: z.number().default(100),
       date: z.coerce.date(),
       // Optional wording for the date, e.g. "Mid-Oct 2026".
       dateLabel: z.string().optional(),
