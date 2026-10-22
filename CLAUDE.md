@@ -5,7 +5,10 @@ Portfolio site for Maximilien Roi (artist name MAXRØ, always uppercase with Ø)
 ## Updating content
 - Source of truth is the Notion database "Portfolio — site" (data source `collection://767ff203-cdf9-4b00-b134-1b52bb92444a`, inside "Cerveau externe — Maximilien"). Add/edit rows there and tick Publish; the hourly workflow syncs into `src/content/` and republishes. Files in `src/content/entries/en/` and `src/content/log/en/` are overwritten by the sync.
 - `src/content/site/en.json` (hero sentence, contact, section titles) is edited in the repo, not Notion.
-- Photos: Notion "Photo" column, or `src/assets/media/` + `image:`/`imageAlt:` frontmatter. Video/audio: `public/media/`.
+- Photos: Notion "Photo" column, or repo files listed in `src/data/media.ts` (hero photo, left-column media per section, extra media per entry/log row matched by title). Repo images go in `src/assets/media/`, videos in `public/media/`. Keep alt text factual.
+- Sub-categories inside a section: `groups` in `en.json` (entry titles; unlisted entries fall into the last group).
+- Music Society log rows: Notion Title = heading, Text = body, Order = position (oldest first).
+- CV: `public/cv/Maximilien-Roi-CV.pdf` (Download CV buttons in hero and contact).
 
 ## Writing rules (from Maximilien)
 - Never invent facts. Ask, or leave it out.
