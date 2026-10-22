@@ -3,15 +3,15 @@
   "name": "Maximilien Roi",
   "artistName": "MAXRØ",
   "title": "Maximilien Roi (MAXRØ), pianist and producer in London",
-  "description": "Pianist and producer in London, studying Music Production, Performance and Business at the University of Westminster. Looking for part-time work or an internship.",
-  "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster.",
-  "lookingFor": "I'm looking for part-time work or an internship as a studio assistant, producer, piano teacher, or in social media or events.",
+  "description": "Pianist and producer in London (MAXRØ), studying Music Production, Performance and Business at the University of Westminster and co-founder of the Westminster Music Society. Open to part-time work and internships.",
+  "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster. I release music as MAXRØ, make piano videos, and co-founded the university's Music Society, because most of what I enjoy comes back to bringing people together around music.",
+  "lookingFor": "I'm looking for part-time work or an internship as a studio assistant, producer or piano teacher, or in social media and events, while I build a freelance career across production, performance and teaching.",
   "email": "maximilienroi@icloud.com",
   "phone": "+44 7754 863571",
   "phoneNote": "work number",
   "location": "London",
-  "languages": "French (native), English (fluent), some Spanish and Russian.",
-  "cvNote": "CV available on request.",
+  "languages": "French (native), English (fluent), Spanish (basic).",
+  "cvNote": "Download my CV (PDF)",
   "listen": {
     "label": "Listen on Spotify",
     "url": "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy"
@@ -42,27 +42,82 @@
   "sections": {
     "production": {
       "title": "Production",
-      "intro": "I work in Logic Pro and FL Studio, and do my own MIDI programming and mixing. I also do live sound."
+      "intro": "I produce, mix and master in Logic Pro, and most of my tracks start at the piano, from a chord progression I then build the whole arrangement around.\n\nAlongside my own releases as MAXRØ, I compose for film and work on group projects at university, where I'm often the one coordinating everyone.",
+      "groups": [
+        {
+          "title": "My own music",
+          "items": [
+            "MAXRØ",
+            "??¿",
+            "Behind the fence"
+          ]
+        },
+        {
+          "title": "Film, live and group projects",
+          "items": []
+        }
+      ]
     },
     "piano": {
       "title": "Piano & teaching",
-      "intro": ""
+      "intro": "I've played the piano on and off for 14 years. Today I mostly play jazz, compose and improvise, and I've taught beginners online. This term I've also started learning the drums and the guitar.",
+      "groups": [
+        {
+          "title": "Playing",
+          "items": [
+            "Playing the piano",
+            "Drums and guitar"
+          ]
+        },
+        {
+          "title": "Teaching",
+          "items": [
+            "Piano tutor"
+          ]
+        }
+      ]
     },
     "social": {
       "title": "Social media",
-      "intro": ""
+      "intro": "I share piano and music theory on TikTok, Instagram and YouTube, and I've run the social media for a podcast as a university project."
     },
     "society": {
       "title": "Music Society & events",
-      "intro": "I'm President and founder of the Westminster Music Society, with Jasper Hazell as Vice-President and Bradley Fletcher as Treasurer. I started it to get music students from different years and courses working together. This is what we've done so far, newest first."
+      "intro": "I co-founded the Westminster Music Society with Jasper Hazell in September 2026, and it became an official society in October. I'm President, Jasper is Vice-President and Bradley Fletcher is Treasurer.\n\nThe idea is simple: get music students from every year and course to meet, play and make things together, and make everyone feel welcome doing it. Here is what we've done so far, month by month."
+    },
+    "education": {
+      "title": "Education",
+      "intro": "A music degree in London, after a BTEC in Music Production in Kent."
     },
     "also": {
       "title": "Also",
-      "intro": ""
+      "intro": "The system I use to stay organised, and the work I've done outside music, from fine-dining restaurants to a library in France.",
+      "groups": [
+        {
+          "title": "How I organise my work",
+          "items": [
+            "My external brain"
+          ]
+        },
+        {
+          "title": "Jobs",
+          "items": [
+            "Runner and waiter",
+            "Seasonal jobs",
+            "Live sound and stage crew"
+          ]
+        },
+        {
+          "title": "Volunteering",
+          "items": [
+            "Volunteer"
+          ]
+        }
+      ]
     },
     "contact": {
       "title": "Contact",
-      "intro": ""
+      "intro": "The quickest way to reach me is by email."
     }
   },
   "ui": {
@@ -80,5 +135,9 @@
     "basedIn": "Based in",
     "languages": "Languages",
     "elsewhere": "Elsewhere"
+  },
+  "cv": {
+    "label": "Download CV",
+    "file": "cv/Maximilien-Roi-CV.pdf"
   }
 }
