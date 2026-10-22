@@ -6,4 +6,4 @@ dates: "Oct – Dec 2025"
 sortDate: "2025-10-01"
 university: true
 ---
-I ran @amplify_podcast on TikTok and Instagram with three classmates: trend-based videos, Reels and slideshows.
+A university project in which four of us ran the social media for Amplify, a podcast, on TikTok and Instagram. I made trend-based videos, Reels and slideshows, and we planned the content together as a team.

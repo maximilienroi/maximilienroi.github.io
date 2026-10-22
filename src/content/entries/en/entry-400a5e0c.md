@@ -1,9 +1,13 @@
 ---
 section: "production"
 title: "??¿"
-where: "Ambient project, in progress"
+where: "Ambient series, in progress"
 dates: "Apr 2025 – now"
 sortDate: "2025-04-01"
 order: 2
+links:
+  - { label: "Ernie Shorten on Instagram", url: "https://www.instagram.com/ernie_shorten/" }
 ---
-An ambient project that opens with where?, which is already out. I'm working with the contemporary dancer Ernie Shorten, who will dance to the tracks for a series of videos.
+A series of ambient tracks, each named after a question: where?, how?, when?, who? The first one, where?, is already out.
+
+For each track I'm working with the contemporary dancer Ernie Shorten, who dances to the music, so that every track in the series comes with its own dance video.

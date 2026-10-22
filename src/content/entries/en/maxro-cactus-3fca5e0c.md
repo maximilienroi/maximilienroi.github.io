@@ -10,6 +10,6 @@ links:
   - { label: "Instagram", url: "https://www.instagram.com/maxro_cactus/" }
   - { label: "YouTube", url: "https://www.youtube.com/@maxro_cactus" }
 ---
-Piano and music theory videos in a few formats: the easiest chords for beginners, "Steal these chords", "Learning jazz standards", "Playing the most famous songs on this app", and a lot of my own compositions. My best videos have passed 230,000 views.
+Short piano and music theory videos in a few recurring formats: the easiest chords for beginners, Steal These Chords, Learning Jazz Standards, and a lot of my own compositions.
 
-Next, I want to make teaching videos on music theory and jazz harmony.
+Next, I want to diversify into proper teaching videos on music theory and jazz harmony, in the spirit of Charlie Tran's channel, where one idea is explained clearly at the piano in a few minutes.
