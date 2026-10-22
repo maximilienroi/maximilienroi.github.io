@@ -175,12 +175,16 @@ for (const page of pages) {
   if (section === 'log') {
     const file = path.join(dirs.log, `${date}-${name}.md`);
     const fm = frontmatter({
+      title,
+      order: typeof p.Order?.number === 'number' ? p.Order.number : undefined,
       date,
       dateLabel: plain(p['Dates shown']?.rich_text),
       image: photo && relFrom(dirs.log, photo),
       imageAlt: photo ? photoAlt : undefined,
     });
-    await writeFile(file, `${fm}\n${markdown(p.Title.title)}\n`);
+    // The Text column is the row's story; older rows only had a title.
+    const body = markdown(p.Text?.rich_text) || markdown(p.Title.title);
+    await writeFile(file, `${fm}\n${body}\n`);
     written.add(file);
     continue;
   }
