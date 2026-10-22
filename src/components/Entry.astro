@@ -5,6 +5,8 @@ import Photo from './Photo.astro';
 import Video from './Video.astro';
 import AudioPlayer from './AudioPlayer.astro';
 import SpotifyEmbed from './SpotifyEmbed.astro';
+import MediaFigure from './MediaFigure.astro';
+import { mediaFor } from '../data/media';
 
 interface Props {
   entry: CollectionEntry<'entries'>;
@@ -16,7 +18,8 @@ const { entry, ui, compact = false } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 const hasBody = Boolean(entry.body?.trim());
-const hasMedia = Boolean(d.image || d.video);
+const extra = mediaFor(d.title);
+const hasMedia = Boolean(d.image || d.video || extra.length);
 const where = [d.where, d.university ? `(${ui.universityProject})` : null].filter(Boolean).join(' ');
 ---
 
@@ -56,6 +59,9 @@ const where = [d.where, d.university ? `(${ui.universityProject})` : null].filte
         ) : (
           d.image && <Photo image={d.image} alt={d.imageAlt ?? ''} />
         )}
+        {extra.map((m) => (
+          <MediaFigure media={m} />
+        ))}
       </div>
     )
   }
@@ -138,6 +144,8 @@ const where = [d.where, d.university ? `(${ui.universityProject})` : null].filte
 
   .entry-media {
     align-self: start;
+    display: grid;
+    gap: 1rem;
   }
 
   @media (max-width: 64rem) {

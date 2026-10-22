@@ -1,5 +1,8 @@
 ---
+import { existsSync } from 'node:fs';
+import { Image } from 'astro:assets';
 import CopyEmail from './CopyEmail.astro';
+import { heroPhoto } from '../data/media';
 
 interface Props {
   site: {
@@ -10,12 +13,16 @@ interface Props {
     email: string;
     linkedin: string;
     listen: { label: string; url: string };
+    cv: { label: string; file: string };
     ui: { copyEmail: string; copied: string; linkedin: string };
   };
 }
 
 const { site } = Astro.props;
 const [first, ...rest] = site.name.split(' ');
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// The CV button only appears once the PDF is in public/.
+const hasCv = existsSync(`${process.cwd()}/public/${site.cv.file}`);
 ---
 
 <header class="hero">
@@ -25,10 +32,21 @@ const [first, ...rest] = site.name.split(' ');
   </h1>
 
   <div class="hero-body">
-    <p class="hero-artist">
-      <span class="visually-hidden">{site.artistName}</span>
-      <span aria-hidden="true">MAXR<span class="slashed">O</span></span>
-    </p>
+    <div class="hero-side">
+      {heroPhoto.image && <Image
+        class="hero-photo"
+        src={heroPhoto.image}
+        alt={heroPhoto.alt}
+        widths={[320, 520, 800]}
+        sizes="(max-width: 52rem) 14rem, 22rem"
+        loading="eager"
+        fetchpriority="high"
+      />}
+      <p class="hero-artist">
+        <span class="visually-hidden">{site.artistName}</span>
+        <span aria-hidden="true">MAXR<span class="slashed">O</span></span>
+      </p>
+    </div>
     <div class="hero-text">
       <p class="hero-intro">{site.intro}</p>
       <p class="hero-intro">{site.lookingFor}</p>
@@ -36,6 +54,7 @@ const [first, ...rest] = site.name.split(' ');
         <CopyEmail email={site.email} label={site.ui.copyEmail} done={site.ui.copied} solid />
         <a class="button" href={site.linkedin} rel="me">{site.ui.linkedin}</a>
         <a class="button" href={site.listen.url} rel="me">{site.listen.label}</a>
+        {hasCv && <a class="button" href={`${base}${site.cv.file}`} download>{site.cv.label}</a>}
       </div>
     </div>
   </div>
@@ -66,6 +85,21 @@ const [first, ...rest] = site.name.split(' ');
     grid-template-columns: var(--rail) 8fr;
     column-gap: var(--gutter);
     margin-top: clamp(2rem, 4.5vw, 3.75rem);
+  }
+
+  .hero-side {
+    max-width: 22rem;
+  }
+
+  .hero-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--wash);
+    margin-bottom: 1rem;
   }
 
   .hero-artist {
@@ -119,7 +153,10 @@ const [first, ...rest] = site.name.split(' ');
   @media (max-width: 52rem) {
     .hero-body {
       grid-template-columns: 1fr;
-      row-gap: 1.25rem;
+      row-gap: 1.5rem;
+    }
+    .hero-side {
+      max-width: 14rem;
     }
   }
 
@@ -132,7 +169,7 @@ const [first, ...rest] = site.name.split(' ');
     .hero-line + .hero-line {
       animation: open-up 900ms var(--ease-out) 70ms both;
     }
-    .hero-artist {
+    .hero-side {
       animation: arrive 500ms var(--ease-out) 420ms both;
     }
     .slashed::after {
@@ -154,7 +191,7 @@ const [first, ...rest] = site.name.split(' ');
 
   @media (prefers-reduced-motion: reduce) {
     .hero-text,
-    .hero-artist {
+    .hero-side {
       animation: fade 400ms ease both;
     }
   }

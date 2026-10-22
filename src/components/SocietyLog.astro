@@ -2,6 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import Photo from './Photo.astro';
+import MediaFigure from './MediaFigure.astro';
+import { mediaFor } from '../data/media';
 
 interface Props {
   items: CollectionEntry<'log'>[];
@@ -10,34 +12,43 @@ interface Props {
 
 const { items, lang } = Astro.props;
 const fmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang, {
-  day: 'numeric',
   month: 'short',
   year: 'numeric',
   timeZone: 'UTC',
 });
-const rows = await Promise.all(items.map(async (item) => ({ item, ...(await render(item)) })));
+const rows = await Promise.all(
+  items.map(async (item) => ({ item, extra: mediaFor(item.data.title ?? ''), ...(await render(item)) })),
+);
 ---
 
 <ol class="log">
   {
-    rows.map(({ item, Content }) => (
-      <li class:list={['log-row', { 'log-row--media': item.data.image }]}>
+    rows.map(({ item, extra, Content }) => (
+      <li class="log-row">
         <time class="log-date ui soft" datetime={item.data.date.toISOString().slice(0, 10)}>
           {item.data.dateLabel ?? fmt.format(item.data.date).replace('Sept', 'Sep')}
         </time>
-        <div class="log-text">
-          <Content />
+        <div class="log-main">
+          {item.data.title && <h3 class="log-title">{item.data.title}</h3>}
+          <div class="log-text">
+            <Content />
+          </div>
           {item.data.link && (
             <a class="log-link ui" href={item.data.link.url}>
               {item.data.link.label}
             </a>
           )}
+          {(item.data.image || extra.length > 0) && (
+            <div class="log-media">
+              {item.data.image && (
+                <Photo image={item.data.image} alt={item.data.imageAlt ?? ''} sizes="(max-width: 36rem) 100vw, 32rem" />
+              )}
+              {extra.map((m) => (
+                <MediaFigure media={m} sizes="(max-width: 36rem) 100vw, 32rem" />
+              ))}
+            </div>
+          )}
         </div>
-        {item.data.image && (
-          <div class="log-media">
-            <Photo image={item.data.image} alt={item.data.imageAlt ?? ''} sizes="(max-width: 36rem) 100vw, 12rem" />
-          </div>
-        )}
       </li>
     ))
   }
@@ -52,7 +63,7 @@ const rows = await Promise.all(items.map(async (item) => ({ item, ...(await rend
     display: grid;
     grid-template-columns: var(--dates) minmax(0, 1fr);
     column-gap: 1.5rem;
-    padding-block: 0.85rem;
+    padding-block: 1.75rem;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -60,34 +71,57 @@ const rows = await Promise.all(items.map(async (item) => ({ item, ...(await rend
     padding-top: 0;
   }
 
-  .log-row--media {
-    grid-template-columns: var(--dates) minmax(0, 1fr) 9rem;
+  .log-row:last-child {
+    border-bottom: 0;
   }
 
   .log-date {
-    padding-top: 0.2rem;
+    padding-top: 0.42rem;
+  }
+
+  .log-main {
+    max-width: 36rem;
+  }
+
+  .log-title {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 650;
+    font-stretch: 108%;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
   .log-text {
-    max-width: 36rem;
+    margin-top: 0.75rem;
     text-wrap: pretty;
+  }
+
+  .log-text :global(p + p) {
+    margin-top: 0.6em;
   }
 
   .log-link {
     display: inline-block;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     font-weight: 550;
   }
 
+  .log-media {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    max-width: 32rem;
+  }
+
   @media (max-width: 36rem) {
-    .log-row,
-    .log-row--media {
+    .log-row {
       grid-template-columns: 1fr;
-      row-gap: 0.15rem;
+      row-gap: 0.35rem;
     }
-    .log-media {
-      margin-top: 0.6rem;
-      max-width: 16rem;
+    .log-date {
+      padding-top: 0;
     }
   }
 </style>

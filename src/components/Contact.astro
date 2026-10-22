@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import CopyEmail from './CopyEmail.astro';
 
 interface Props {
@@ -10,12 +11,16 @@ interface Props {
     location: string;
     languages: string;
     cvNote: string;
+    cv: { label: string; file: string };
     socials: { label: string; url: string }[];
     ui: { copyEmail: string; copied: string; linkedin: string; phone: string; basedIn: string; languages: string; elsewhere: string };
   };
 }
 
 const { site } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// The CV button only appears once the PDF is in public/.
+const hasCv = existsSync(`${process.cwd()}/public/${site.cv.file}`);
 ---
 
 <div class="contact">
@@ -24,6 +29,7 @@ const { site } = Astro.props;
   <div class="contact-actions">
     <CopyEmail email={site.email} label={site.ui.copyEmail} done={site.ui.copied} solid />
     <a class="button" href={site.linkedin} rel="me">{site.ui.linkedin}</a>
+    {hasCv && <a class="button" href={`${base}${site.cv.file}`} download>{site.cvNote}</a>}
   </div>
 
   <dl class="contact-details">
@@ -60,7 +66,6 @@ const { site } = Astro.props;
     </div>
   </dl>
 
-  <p class="contact-cv">{site.cvNote}</p>
 </div>
 
 <style>

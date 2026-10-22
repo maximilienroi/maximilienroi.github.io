@@ -13,11 +13,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 // Local files live in public/media/; full URLs are used as they are.
 const url = /^https?:\/\//.test(src) ? src : `${base}${src.replace(/^\/?(public\/)?/, '')}`;
 const posterImg = poster ? await getImage({ src: poster, width: 800, format: 'webp' }) : null;
+// Keep the frame's shape before the video loads; tall videos get a narrower box.
+const ratio = poster ? poster.width / poster.height : 16 / 9;
+const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).toFixed(2)}rem);`;
 ---
 
-<figure class="video">
+<figure class="video" style={boxStyle}>
   <video src={url} poster={posterImg?.src} muted loop playsinline preload="none" aria-label={label}></video>
-  <button class="video-toggle ui" type="button" aria-pressed="false">Play</button>
+  <button class="video-toggle ui" type="button" aria-pressed="false">Play with sound</button>
 </figure>
 
 <script>
@@ -30,19 +33,28 @@ const posterImg = poster ? await getImage({ src: poster, width: 800, format: 'we
 
     const sync = () => {
       const playing = !video.paused;
-      toggle.textContent = playing ? 'Pause' : 'Play';
+      toggle.textContent = playing && !video.muted ? 'Pause' : 'Play with sound';
       toggle.setAttribute('aria-pressed', String(playing));
       fig.classList.toggle('is-playing', playing);
     };
     video.addEventListener('play', sync);
     video.addEventListener('pause', sync);
 
-    toggle.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+    // The button plays with sound; hovering only previews silently.
+    toggle.addEventListener('click', () => {
+      if (video.paused || video.muted) {
+        video.muted = false;
+        video.play();
+      } else video.pause();
+    });
     if (canHover) {
       fig.addEventListener('pointerenter', () => video.play());
       fig.addEventListener('pointerleave', () => video.pause());
     } else {
-      video.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+      video.addEventListener('click', () => {
+        video.muted = false;
+        video.paused ? video.play() : video.pause();
+      });
     }
   }
 </script>
@@ -56,8 +68,10 @@ const posterImg = poster ? await getImage({ src: poster, width: 800, format: 'we
   }
 
   .video video {
+    display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
   }
 
   .video-toggle {

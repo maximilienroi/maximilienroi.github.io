@@ -1,17 +1,31 @@
 ---
+import type { Media } from '../data/media';
+import MediaFigure from './MediaFigure.astro';
+
 interface Props {
   id: string;
   title: string;
   intro?: string;
+  media?: Media[];
 }
 
-const { id, title, intro } = Astro.props;
+const { id, title, intro, media = [] } = Astro.props;
+const paragraphs = (intro ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
 
 <section class="section" id={id} aria-labelledby={`${id}-title`}>
   <div class="section-rail">
     <h2 class="section-title" id={`${id}-title`}>{title}</h2>
-    {intro && <p class="section-intro">{intro}</p>}
+    {paragraphs.map((p) => <p class="section-intro">{p}</p>)}
+    {
+      media.length > 0 && (
+        <div class="section-media">
+          {media.map((m) => (
+            <MediaFigure media={m} sizes="(max-width: 52rem) 100vw, 24rem" />
+          ))}
+        </div>
+      )
+    }
   </div>
   <div class="section-content">
     <slot />
@@ -29,8 +43,6 @@ const { id, title, intro } = Astro.props;
 
   .section-rail {
     align-self: start;
-    position: sticky;
-    top: 1.5rem;
   }
 
   .section-title {
@@ -41,6 +53,17 @@ const { id, title, intro } = Astro.props;
     line-height: 1;
     letter-spacing: -0.015em;
     text-wrap: balance;
+  }
+
+  .section-intro + .section-intro {
+    margin-top: 0.6em;
+  }
+
+  .section-media {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+    max-width: 22rem;
   }
 
   .section-intro {
@@ -55,11 +78,12 @@ const { id, title, intro } = Astro.props;
       grid-template-columns: 1fr;
       row-gap: 2rem;
     }
-    .section-rail {
-      position: static;
-    }
     .section-intro {
       max-width: 36rem;
+    }
+    .section-media {
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      max-width: 24rem;
     }
   }
 </style>
