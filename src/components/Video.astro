@@ -20,7 +20,7 @@ const ratio = poster ? poster.width / poster.height : 16 / 9;
 const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).toFixed(2)}rem);`;
 ---
 
-<figure class="video" style={boxStyle} data-silent={silent ? '' : undefined}>
+<figure class="video" style={boxStyle} data-silent={silent ? '' : undefined} data-portrait={ratio < 1 ? '' : undefined}>
   <video src={url} poster={posterImg?.src} muted loop playsinline preload="none" aria-label={label}></video>
   <button class="video-toggle ui" type="button" aria-pressed="false">{silent ? 'Play' : 'Play with sound'}</button>
   <button class="video-full" type="button" aria-label="Watch full screen" title="Full screen">
@@ -59,16 +59,28 @@ const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).to
     });
 
     // Full screen, with sound and the browser's own controls.
-    full.addEventListener('click', () => {
+    // Vertical videos stay vertical: the whole frame is shown, and on phones
+    // that allow it the screen is held in portrait while it plays.
+    const portrait = fig.hasAttribute('data-portrait');
+    full.addEventListener('click', async () => {
       if (!silent) video.muted = false;
       video.controls = true;
       const v = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
-      if (video.requestFullscreen) video.requestFullscreen().catch(() => v.webkitEnterFullscreen?.());
-      else v.webkitEnterFullscreen?.();
+      try {
+        if (video.requestFullscreen) await video.requestFullscreen({ navigationUI: 'hide' });
+        else v.webkitEnterFullscreen?.();
+      } catch {
+        v.webkitEnterFullscreen?.();
+      }
+      const o = screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> };
+      o?.lock?.(portrait ? 'portrait' : 'landscape').catch(() => {});
       video.play();
     });
     const leave = () => {
-      if (!document.fullscreenElement) video.controls = false;
+      if (!document.fullscreenElement) {
+        video.controls = false;
+        (screen.orientation as ScreenOrientation & { unlock?: () => void })?.unlock?.();
+      }
     };
     document.addEventListener('fullscreenchange', leave);
     video.addEventListener('webkitendfullscreen', () => (video.controls = false));
@@ -97,6 +109,16 @@ const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).to
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Full screen shows the whole frame, vertical or horizontal, never cropped. */
+  .video video:fullscreen {
+    object-fit: contain;
+    background: #000;
+  }
+  .video video:-webkit-full-screen {
+    object-fit: contain;
+    background: #000;
   }
 
   .video-toggle {
