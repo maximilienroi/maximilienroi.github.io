@@ -19,10 +19,19 @@ const directory = img('musician-directory-blurred.jpg');
 const sessionBandPoster = img('session-band-poster.jpg');
 const sessionPoisonPoster = img('session-poison-poster.jpg');
 const pianoVideoPoster = img('piano-video-poster.jpg');
+const stealPoster = img('steal-these-chords-17-poster.jpg');
+const nardisPoster = img('nardis-poster.jpg');
+const perdu1Poster = img('perdu-animation-1-poster.jpg');
+const perdu2Poster = img('perdu-animation-2-poster.jpg');
+const fltCover = img('felt-like-home-cover.jpg');
+const btfCover = img('behind-the-fence-cover-v1.jpg');
+const mamanCover = img('maman-je-saigne-cover.jpg');
+const chezLui = img('chez-lui.jpg');
+const brainGraph = img('external-brain-graph.jpg');
 
 export type Media =
   | { kind: 'image'; image: ImageMetadata | undefined; alt: string; caption?: string }
-  | { kind: 'video'; src: string; poster?: ImageMetadata; alt: string; caption?: string };
+  | { kind: 'video'; src: string; poster?: ImageMetadata; alt: string; caption?: string; silent?: boolean };
 // (A video is shown only when its poster image is in the repo, which is
 // uploaded together with the video file.)
 
@@ -38,7 +47,7 @@ const railMediaAll: Record<string, Media[]> = {
       kind: 'image',
       image: drawing,
       alt: 'The MAXRØ drawing: a head crossed out with a black X, drawn in ink',
-      caption: 'The MAXRØ artwork.',
+      caption: 'MAXRØ',
     },
   ],
   piano: [
@@ -47,14 +56,28 @@ const railMediaAll: Record<string, Media[]> = {
       image: atThePiano,
       alt: 'Maximilien playing a grand piano in a studio',
     },
-  ],
-  social: [
     {
       kind: 'video',
       src: 'media/piano-video.mp4',
       poster: pianoVideoPoster,
       alt: 'Maximilien playing a grand piano, filmed from the side',
-      caption: 'From one of my piano videos.',
+      caption: 'Patterns in C minor.',
+    },
+  ],
+  social: [
+    {
+      kind: 'video',
+      src: 'media/steal-these-chords-17.mp4',
+      poster: stealPoster,
+      alt: 'A Steal These Chords video: chords shown as falling notes above a keyboard, with hands playing',
+      caption: 'Steal These Chords, part 17.',
+    },
+    {
+      kind: 'video',
+      src: 'media/nardis.mp4',
+      poster: nardisPoster,
+      alt: 'Maximilien playing Nardis on a grand piano for a video series on famous pieces',
+      caption: 'Famous pieces, part 3: Nardis.',
     },
   ],
   society: [
@@ -79,6 +102,60 @@ const railMediaAll: Record<string, Media[]> = {
 
 // Shown next to a single entry or log row, matched by title.
 const entryMediaAll: Record<string, Media[]> = {
+  'MAXRØ': [
+    {
+      kind: 'image',
+      image: mamanCover,
+      alt: 'Cover of Maman, je saigne: a painting in red, grey and black',
+      caption: 'Cover of Maman, je saigne.',
+    },
+  ],
+  'Behind the fence': [
+    {
+      kind: 'image',
+      image: btfCover,
+      alt: 'First version of the Behind the fence cover: a colourful painting of plants in red, green and yellow',
+      caption: 'First version of the cover.',
+    },
+  ],
+  perdu: [
+    {
+      kind: 'video',
+      src: 'media/perdu-animation-1.mp4',
+      poster: perdu1Poster,
+      alt: 'Frame-by-frame animation of MAXRØ, a head with a black cross over the face',
+    },
+    {
+      kind: 'video',
+      src: 'media/perdu-animation-2.mp4',
+      poster: perdu2Poster,
+      alt: 'Frame-by-frame animation of a hooded face drawn in black ink',
+      caption: 'Animations drawn frame by frame in Procreate, for perdu and the MAXRØ identity.',
+      silent: true,
+    },
+  ],
+  'Felt Like Home EP': [
+    {
+      kind: 'image',
+      image: fltCover,
+      alt: 'Felt Like Home cover: childhood photos of the members around a crayon drawing of a house',
+    },
+  ],
+  'My external brain': [
+    {
+      kind: 'image',
+      image: brainGraph,
+      alt: "My external brain shown as a graph in Obsidian, with people's names blurred",
+      caption: 'The graph view in Obsidian.',
+    },
+  ],
+  'Runner and waiter': [
+    {
+      kind: 'image',
+      image: chezLui,
+      alt: 'The front of Chez Lui in Notting Hill, with red chairs under a white awning',
+    },
+  ],
   'Playing the piano': [
     {
       kind: 'image',
@@ -96,7 +173,6 @@ const entryMediaAll: Record<string, Media[]> = {
       kind: 'image',
       image: directory,
       alt: "The Musician Directory search page, with members' details blurred",
-      caption: "Members' details are blurred.",
     },
   ],
 };
