@@ -4,7 +4,7 @@
   "artistName": "MAXRØ",
   "title": "Maximilien Roi (MAXRØ), pianist and producer in London",
   "description": "Pianist and producer in London (MAXRØ), studying Music Production, Performance and Business at the University of Westminster and co-founder of the Westminster Music Society. Open to part-time work and internships.",
-  "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster. I release music as MAXRØ, make piano videos, and co-founded the university's Music Society, because most of what I enjoy comes back to bringing people together around music.",
+  "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster. I release music as MAXRØ, make piano videos on social media, and co-founded the university's Music Society, because most of what I enjoy comes back to bringing people together around music.",
   "lookingFor": "I'm looking for part-time work or an internship as a studio assistant, producer or piano teacher, or in social media and events, while I build a freelance career across production, performance and teaching.",
   "email": "maximilienroi@icloud.com",
   "phone": "+44 7754 863571",
@@ -42,14 +42,15 @@
   "sections": {
     "production": {
       "title": "Production",
-      "intro": "I produce, mix and master in Logic Pro, and most of my tracks start at the piano, from a chord progression I then build the whole arrangement around.\n\nAlongside my own releases as MAXRØ, I compose for film and work on group projects at university, where I'm often the one coordinating everyone.",
+      "intro": "I produce, mix and master in Logic Pro, and most of my tracks start at the piano, from a chord progression I then build the whole arrangement around.\n\nAlongside my own releases as MAXRØ, I compose for film and work on group projects at university, where I like taking on the role of coordinator and getting everyone working together.",
       "groups": [
         {
           "title": "My own music",
           "items": [
             "MAXRØ",
             "??¿",
-            "Behind the fence"
+            "Behind the fence",
+            "perdu"
           ]
         },
         {
@@ -83,7 +84,7 @@
     },
     "society": {
       "title": "Music Society & events",
-      "intro": "I co-founded the Westminster Music Society with Jasper Hazell in September 2026, and it became an official society in October. I'm President, Jasper is Vice-President and Bradley Fletcher is Treasurer.\n\nThe idea is simple: get music students from every year and course to meet, play and make things together, and make everyone feel welcome doing it. Here is what we've done so far, month by month."
+      "intro": "I co-founded the Westminster Music Society with Jasper Hazel in September 2026, and it became an official society in October. I'm President, Jasper is Vice-President and Bradley Fletcher is Treasurer.\n\nThe idea is simple: get music students from every year and course to meet, play and make things together, and make everyone feel welcome doing it. Here is what we've done so far, month by month."
     },
     "education": {
       "title": "Education",
