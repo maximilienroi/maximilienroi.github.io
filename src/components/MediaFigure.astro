@@ -14,7 +14,7 @@ const { media, sizes } = Astro.props;
 <figure class="media-figure">
   {
     media.kind === 'video' ? (
-      <Video src={media.src} poster={media.poster} label={media.alt} />
+      <Video src={media.src} poster={media.poster} label={media.alt} silent={media.silent} />
     ) : (
       <Photo image={media.image!} alt={media.alt} sizes={sizes} />
     )

@@ -36,8 +36,7 @@ const hasCv = existsSync(`${process.cwd()}/public/${site.cv.file}`);
     <div>
       <dt class="ui soft">{site.ui.phone}</dt>
       <dd>
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>{' '}
-        <span class="soft">({site.phoneNote})</span>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>
       </dd>
     </div>
     <div>

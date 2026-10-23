@@ -6,9 +6,11 @@ interface Props {
   src: string;
   poster?: ImageMetadata;
   label: string;
+  // A video with no sound track: the button just says Play.
+  silent?: boolean;
 }
 
-const { src, poster, label } = Astro.props;
+const { src, poster, label, silent = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 // Local files live in public/media/; full URLs are used as they are.
 const url = /^https?:\/\//.test(src) ? src : `${base}${src.replace(/^\/?(public\/)?/, '')}`;
@@ -18,9 +20,14 @@ const ratio = poster ? poster.width / poster.height : 16 / 9;
 const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).toFixed(2)}rem);`;
 ---
 
-<figure class="video" style={boxStyle}>
+<figure class="video" style={boxStyle} data-silent={silent ? '' : undefined}>
   <video src={url} poster={posterImg?.src} muted loop playsinline preload="none" aria-label={label}></video>
-  <button class="video-toggle ui" type="button" aria-pressed="false">Play with sound</button>
+  <button class="video-toggle ui" type="button" aria-pressed="false">{silent ? 'Play' : 'Play with sound'}</button>
+  <button class="video-full" type="button" aria-label="Watch full screen" title="Full screen">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" />
+    </svg>
+  </button>
 </figure>
 
 <script>
@@ -30,10 +37,13 @@ const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).to
   for (const fig of document.querySelectorAll<HTMLElement>('.video')) {
     const video = fig.querySelector('video')!;
     const toggle = fig.querySelector<HTMLButtonElement>('.video-toggle')!;
+    const full = fig.querySelector<HTMLButtonElement>('.video-full')!;
+    const silent = fig.hasAttribute('data-silent');
+    const idle = silent ? 'Play' : 'Play with sound';
 
     const sync = () => {
       const playing = !video.paused;
-      toggle.textContent = playing && !video.muted ? 'Pause' : 'Play with sound';
+      toggle.textContent = playing && (silent || !video.muted) ? 'Pause' : idle;
       toggle.setAttribute('aria-pressed', String(playing));
       fig.classList.toggle('is-playing', playing);
     };
@@ -42,17 +52,32 @@ const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).to
 
     // The button plays with sound; hovering only previews silently.
     toggle.addEventListener('click', () => {
-      if (video.paused || video.muted) {
-        video.muted = false;
+      if (video.paused || (!silent && video.muted)) {
+        if (!silent) video.muted = false;
         video.play();
       } else video.pause();
     });
+
+    // Full screen, with sound and the browser's own controls.
+    full.addEventListener('click', () => {
+      if (!silent) video.muted = false;
+      video.controls = true;
+      const v = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+      if (video.requestFullscreen) video.requestFullscreen().catch(() => v.webkitEnterFullscreen?.());
+      else v.webkitEnterFullscreen?.();
+      video.play();
+    });
+    const leave = () => {
+      if (!document.fullscreenElement) video.controls = false;
+    };
+    document.addEventListener('fullscreenchange', leave);
+    video.addEventListener('webkitendfullscreen', () => (video.controls = false));
     if (canHover) {
       fig.addEventListener('pointerenter', () => video.play());
       fig.addEventListener('pointerleave', () => video.pause());
     } else {
       video.addEventListener('click', () => {
-        video.muted = false;
+        if (!silent) video.muted = false;
         video.paused ? video.play() : video.pause();
       });
     }
@@ -90,16 +115,39 @@ const boxStyle = `aspect-ratio: ${ratio}; max-width: min(100%, ${(32 * ratio).to
       transform 160ms var(--ease-out);
   }
 
+  .video-full {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(10 8 14 / 0.72);
+    color: #edebf2;
+    cursor: pointer;
+    transition:
+      opacity 200ms ease,
+      transform 160ms var(--ease-out);
+  }
+
+  .video-full:active,
   .video-toggle:active {
     transform: scale(0.96);
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .video.is-playing .video-toggle {
+    .video.is-playing .video-toggle,
+    .video.is-playing .video-full {
       opacity: 0;
     }
     .video.is-playing:hover .video-toggle,
-    .video-toggle:focus-visible {
+    .video.is-playing:hover .video-full,
+    .video-toggle:focus-visible,
+    .video-full:focus-visible {
       opacity: 1;
     }
   }
