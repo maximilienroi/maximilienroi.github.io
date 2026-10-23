@@ -8,6 +8,7 @@ order: 4
 links:
   - { label: "perdu.000 on SoundCloud", url: "https://soundcloud.com/max-86804891/perdu-000" }
   - { label: "perdu.001 on SoundCloud", url: "https://soundcloud.com/max-86804891/perdu-001" }
+  - { label: "Jean Thoby's Music of the Plants", url: "https://www.musicoftheplants.com/fr/" }
 ---
 perdu (French for lost) is a project I started at home, built on music made by plants. I read about phytoneurology and the work of Jean Thoby, who uses a device called Bamboo to turn the tiny electrical signals of plants into notes. I recorded MIDI from the plants in my living room and built two tracks around it, perdu.000 and perdu.001.
 
