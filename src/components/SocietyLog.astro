@@ -56,13 +56,13 @@ const rows = await Promise.all(
 
 <style>
   .log {
-    max-width: 52rem;
+    max-width: none;
   }
 
   .log-row {
     display: grid;
     grid-template-columns: var(--dates) minmax(0, 1fr);
-    column-gap: 1.5rem;
+    column-gap: var(--entry-gap);
     padding-block: 1.75rem;
     border-bottom: 1px solid var(--rule);
   }
@@ -80,7 +80,7 @@ const rows = await Promise.all(
   }
 
   .log-main {
-    max-width: 36rem;
+    max-width: 42rem;
   }
 
   .log-title {

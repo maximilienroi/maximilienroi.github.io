@@ -14,19 +14,27 @@ const paragraphs = (intro ?? '').split(/\n\s*\n/).filter(Boolean);
 ---
 
 <section class="section" id={id} aria-labelledby={`${id}-title`}>
-  <div class="section-rail">
+  <header class="section-head">
     <h2 class="section-title" id={`${id}-title`}>{title}</h2>
-    {paragraphs.map((p) => <p class="section-intro">{p}</p>)}
     {
-      media.length > 0 && (
-        <div class="section-media">
-          {media.map((m) => (
-            <MediaFigure media={m} sizes="(max-width: 52rem) 100vw, 24rem" />
+      paragraphs.length > 0 && (
+        <div class:list={['section-intro', { 'section-intro--two': paragraphs.length > 1 }]}>
+          {paragraphs.map((p) => (
+            <p>{p}</p>
           ))}
         </div>
       )
     }
-  </div>
+  </header>
+  {
+    media.length > 0 && (
+      <div class="section-media">
+        {media.map((m) => (
+          <MediaFigure media={m} strip sizes="(max-width: 52rem) 90vw, 30rem" />
+        ))}
+      </div>
+    )
+  }
   <div class="section-content">
     <slot />
   </div>
@@ -34,15 +42,16 @@ const paragraphs = (intro ?? '').split(/\n\s*\n/).filter(Boolean);
 
 <style>
   .section {
-    display: grid;
-    grid-template-columns: var(--rail) 8fr;
-    column-gap: var(--gutter);
     padding-block: clamp(2.25rem, 5vw, 4rem) clamp(3rem, 7vw, 5.5rem);
     border-top: 1.5px solid var(--ink);
   }
 
-  .section-rail {
-    align-self: start;
+  /* Title on the left, the intro beside it, so the top of each section is full. */
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) minmax(0, 2.4fr);
+    column-gap: var(--gutter);
+    align-items: start;
   }
 
   .section-title {
@@ -55,35 +64,51 @@ const paragraphs = (intro ?? '').split(/\n\s*\n/).filter(Boolean);
     text-wrap: balance;
   }
 
-  .section-intro + .section-intro {
+  .section-intro {
+    max-width: 44rem;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+    padding-top: 0.35rem;
+  }
+
+  .section-intro p + p {
     margin-top: 0.6em;
   }
 
-  .section-media {
-    display: grid;
-    gap: 1.25rem;
-    margin-top: 1.75rem;
-    max-width: 22rem;
+  .section-intro--two {
+    max-width: none;
+    columns: 2;
+    column-gap: var(--gutter);
   }
 
-  .section-intro {
-    margin-top: 1rem;
-    max-width: 22rem;
-    color: var(--ink-soft);
-    text-wrap: pretty;
+  .section-intro--two p {
+    break-inside: avoid;
+  }
+
+  /* Photos and videos of the section, side by side at one height. */
+  .section-media {
+    --strip: 20rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem 1.5rem;
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+
+  .section-content {
+    margin-top: clamp(2.25rem, 4.5vw, 3.5rem);
   }
 
   @media (max-width: 52rem) {
-    .section {
+    .section-head {
       grid-template-columns: 1fr;
-      row-gap: 2rem;
+      row-gap: 1rem;
     }
-    .section-intro {
-      max-width: 36rem;
+    .section-intro--two {
+      columns: 1;
     }
     .section-media {
-      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-      max-width: 24rem;
+      --strip: 16rem;
     }
   }
 </style>

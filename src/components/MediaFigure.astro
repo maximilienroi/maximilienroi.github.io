@@ -6,12 +6,17 @@ import Video from './Video.astro';
 interface Props {
   media: Media;
   sizes?: string;
+  // In a section's media strip, every item has the same height.
+  strip?: boolean;
 }
 
-const { media, sizes } = Astro.props;
+const { media, sizes, strip = false } = Astro.props;
+const meta = media.kind === 'video' ? media.poster : media.image;
+const ratio = meta ? meta.width / meta.height : 1;
+const style = strip ? `width: min(100%, calc(var(--strip) * ${ratio.toFixed(4)}));` : undefined;
 ---
 
-<figure class="media-figure">
+<figure class:list={['media-figure', { 'media-figure--strip': strip }]} style={style}>
   {
     media.kind === 'video' ? (
       <Video src={media.src} poster={media.poster} label={media.alt} silent={media.silent} />
@@ -23,6 +28,14 @@ const { media, sizes } = Astro.props;
 </figure>
 
 <style>
+  .media-figure--strip {
+    flex: 0 0 auto;
+  }
+
+  .media-figure--strip :global(.video) {
+    max-width: none !important;
+  }
+
   .media-figure figcaption {
     margin-top: 0.45rem;
     font-size: var(--step--1);
