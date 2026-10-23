@@ -10,6 +10,6 @@ links:
   - { label: "Spotify", url: "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy" }
   - { label: "SoundCloud", url: "https://soundcloud.com/max-86804891" }
 ---
-MAXRØ is the name I release my own music under. I write, produce, mix and master everything myself in Logic Pro, usually starting at the piano and building the track around a chord progression.
+MAXRØ is the character behind my music: a figure whose face is crossed out, a way of talking about feeling lost and looking for who you are. Staying behind him lets the music and the visuals speak first.
 
-My releases are on all streaming platforms, including where?, Fl0at and Maman, je saigne, a single sung by my friend Gracie. Two longer projects are in progress and described just below.
+My releases are on all streaming platforms, including where?, Fl0at and Maman, je saigne, a single with my friend Gracie on vocals. My SoundCloud is a mix of experiments and early versions. I've been posting less there lately, because I'm taking time to improve before the next releases.
