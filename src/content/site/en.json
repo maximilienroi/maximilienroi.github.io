@@ -19,6 +19,10 @@
   "linkedin": "https://www.linkedin.com/in/maximilien-roi/",
   "socials": [
     {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/maximilien-roi/"
+    },
+    {
       "label": "Spotify",
       "url": "https://open.spotify.com/artist/4gtMwDWnqvuqix79CBg4Dy"
     },
