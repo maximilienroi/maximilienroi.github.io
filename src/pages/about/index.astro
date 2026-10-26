@@ -1,0 +1,94 @@
+---
+import Shell from '../../components/Shell.astro';
+import PageHead from '../../components/PageHead.astro';
+import Section from '../../components/Section.astro';
+import Entry from '../../components/Entry.astro';
+import site from '../../content/site/en.json';
+import { railMedia } from '../../data/media';
+import { getEntries, grouped } from '../../data/content';
+
+const entries = await getEntries();
+const s = site.sections;
+const p = site.pages.about;
+const education = entries.filter((e) => e.data.section === 'education');
+---
+
+<Shell title={`${p.title}, ${site.name}`} description={p.description} current="about/">
+  <PageHead title={p.title} lead={p.lead} />
+
+  {
+    education.length > 0 && (
+      <Section id="education" title={s.education.title} intro={s.education.intro} media={railMedia.education}>
+        {education.map((entry) => (
+          <Entry entry={entry} ui={site.ui} compact />
+        ))}
+      </Section>
+    )
+  }
+
+  <Section id="also" title={s.also.title} intro={s.also.intro} media={railMedia.also}>
+    {grouped(entries, 'also').map((g) => (
+      <>
+        {g.title && <h3 class="subhead">{g.title}</h3>}
+        {g.items.map((entry) => (
+          <Entry entry={entry} ui={site.ui} compact />
+        ))}
+      </>
+    ))}
+  </Section>
+
+  <Section id="details" title="Details">
+    <dl class="details">
+      <div>
+        <dt class="ui soft">{site.ui.basedIn}</dt>
+        <dd>{site.location}</dd>
+      </div>
+      <div>
+        <dt class="ui soft">{site.ui.languages}</dt>
+        <dd>{site.languages}</dd>
+      </div>
+    </dl>
+  </Section>
+</Shell>
+
+<style>
+  .subhead {
+    margin: clamp(2.75rem, 5vw, 3.75rem) 0 1.5rem;
+    padding-left: calc(var(--dates) + var(--entry-gap));
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    font-stretch: 112%;
+    color: var(--ink-soft);
+  }
+
+  :global(.section-content) > .subhead:first-child {
+    margin-top: 0;
+  }
+
+  .details {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+    max-width: 44rem;
+  }
+
+  .details > div {
+    display: grid;
+    grid-template-columns: var(--dates) minmax(0, 1fr);
+    column-gap: var(--entry-gap);
+  }
+
+  .details dd {
+    margin: 0;
+  }
+
+  @media (max-width: 36rem) {
+    .subhead {
+      padding-left: 0;
+    }
+    .details > div {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
