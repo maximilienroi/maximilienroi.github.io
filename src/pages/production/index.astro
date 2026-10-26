@@ -1,0 +1,13 @@
+---
+import SkillPage from '../../components/SkillPage.astro';
+import Entry from '../../components/Entry.astro';
+import site from '../../content/site/en.json';
+import { getEntries, pick } from '../../data/content';
+
+const p = site.pages['production'];
+const entries = pick(await getEntries(), p.items, p.sections);
+---
+
+<SkillPage page="production">
+  {entries.map((entry) => <Entry entry={entry} ui={site.ui} />)}
+</SkillPage>
