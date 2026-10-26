@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  lead: string;
+}
+const { title, lead } = Astro.props;
+---
+
+<header class="page-head">
+  <h1 class="page-head-title">{title}</h1>
+  <p class="page-head-lead">{lead}</p>
+</header>
+
+<style>
+  .page-head {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    column-gap: var(--gutter);
+    align-items: end;
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .page-head-title {
+    font-family: var(--display);
+    font-size: clamp(2.75rem, 7vw, 6.5rem);
+    font-weight: 800;
+    font-stretch: 118%;
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    margin-left: -0.05em;
+  }
+
+  .page-head-lead {
+    max-width: 34rem;
+    font-size: var(--step-1);
+    line-height: 1.42;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 52rem) {
+    .page-head {
+      grid-template-columns: 1fr;
+      row-gap: 1.5rem;
+    }
+  }
+</style>

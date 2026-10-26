@@ -7,23 +7,29 @@ import AudioPlayer from './AudioPlayer.astro';
 import SpotifyEmbed from './SpotifyEmbed.astro';
 import MediaFigure from './MediaFigure.astro';
 import { mediaFor } from '../data/media';
+import { slug } from '../data/slug';
 
 interface Props {
   entry: CollectionEntry<'entries'>;
   ui: { universityProject: string; playHere: string; play: string; pause: string };
   compact?: boolean;
+  // On the skill pages only the first paragraph shows, with a link to the full text.
+  excerpt?: boolean;
+  more?: string;
 }
 
-const { entry, ui, compact = false } = Astro.props;
+const { entry, ui, compact = false, excerpt = false, more } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 const hasBody = Boolean(entry.body?.trim());
+const paragraphs = (entry.body ?? '').trim().split(/\n\s*\n/).filter(Boolean);
+const showMore = excerpt && more && paragraphs.length > 1;
 const extra = mediaFor(d.title);
 const hasMedia = Boolean(d.image || d.video || extra.length);
 const where = [d.where, d.university ? `(${ui.universityProject})` : null].filter(Boolean).join(' ');
 ---
 
-<article class:list={['entry', { 'entry--media': hasMedia, 'entry--compact': compact }]}>
+<article id={slug(d.title)} class:list={['entry', { 'entry--media': hasMedia, 'entry--compact': compact }]}>
   <p class="entry-dates ui soft">{d.dates}</p>
 
   <div class="entry-main">
@@ -32,7 +38,12 @@ const where = [d.where, d.university ? `(${ui.universityProject})` : null].filte
     {
       hasBody && (
         <div class="entry-body">
-          <Content />
+          {excerpt ? <p>{paragraphs[0]}</p> : <Content />}
+          {showMore && (
+            <p class="entry-more ui">
+              <a href={more}>Read more about {d.title}</a>
+            </p>
+          )}
         </div>
       )
     }
@@ -133,6 +144,11 @@ const where = [d.where, d.university ? `(${ui.universityProject})` : null].filte
 
   .entry-body :global(p + p) {
     margin-top: 0.6em;
+  }
+
+  .entry-more {
+    margin-top: 0.75rem;
+    font-weight: 550;
   }
 
   .entry-links {

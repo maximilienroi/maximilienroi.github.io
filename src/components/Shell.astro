@@ -1,0 +1,191 @@
+---
+// Shared frame for every page: navigation, content, footer with contact.
+import Base from '../layouts/Base.astro';
+import site from '../content/site/en.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: string;
+}
+
+const { title = site.title, description = site.description, current = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const year = new Date().getFullYear();
+---
+
+<Base lang="en" title={title} description={description} name={site.name} socials={site.socials}>
+  <a class="skip-link" href="#main">{site.ui.skip}</a>
+  <div class="page">
+    <nav class="nav" aria-label="Main">
+      <a class="nav-home" href={base} aria-current={current === 'home' ? 'page' : undefined}>{site.name}</a>
+      <ul class="nav-links">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a href={`${base}${item.path}`} aria-current={current === item.path ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer-contact" id="contact">
+        <h2 class="footer-title">{site.home.contactTitle}</h2>
+        <a class="footer-email" href={`mailto:${site.email}`}>{site.email}</a>
+        <p class="footer-phone">
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>
+        </p>
+        <ul class="footer-socials ui">
+          {
+            site.socials.map((s) => (
+              <li>
+                <a href={s.url} rel="me">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="footer-end ui soft">
+        <p>© {year} {site.name}</p>
+        <p>{site.artistName}</p>
+      </div>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-block: 1.25rem;
+    font-family: var(--display);
+  }
+
+  .nav a {
+    color: var(--ink);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-home {
+    font-weight: 700;
+    font-stretch: 112%;
+    font-size: 1.0625rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    padding-block: 0.35rem;
+    color: var(--ink-soft);
+    transition: color 160ms ease;
+  }
+
+  .nav-links a[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--violet);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.4em;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-links a:hover,
+    .nav-home:hover {
+      color: var(--violet);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .nav {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .nav-links {
+      gap: 0 1.1rem;
+    }
+  }
+
+  .footer {
+    margin-top: clamp(5rem, 10vw, 8rem);
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-contact {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .footer-title {
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  .footer-email {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-family: var(--display);
+    font-size: clamp(1.45rem, 5.2vw, var(--step-4));
+    font-weight: 650;
+    font-stretch: 104%;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.14em;
+  }
+
+  .footer-phone {
+    margin-top: 0.75rem;
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 550;
+    font-variant-numeric: lining-nums;
+  }
+
+  .footer-phone a {
+    color: var(--ink);
+  }
+
+  .footer-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .footer-socials a {
+    display: inline-block;
+    padding-block: 0.35rem;
+  }
+
+  .footer-end {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+</style>

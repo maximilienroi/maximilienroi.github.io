@@ -1,0 +1,307 @@
+---
+import { existsSync } from 'node:fs';
+import { Image } from 'astro:assets';
+import Shell from './Shell.astro';
+import CopyEmail from './CopyEmail.astro';
+import site from '../content/site/en.json';
+import { portraitPhoto, skillMedia } from '../data/media';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const hasCv = existsSync(`${process.cwd()}/public/${site.cv.file}`);
+const [first, ...rest] = site.name.split(' ');
+const h = site.home;
+---
+
+<Shell current="home">
+  <header class="intro">
+    <h1 class="intro-name">
+      <span class="intro-line">{first}</span>
+      <span class="intro-line">{rest.join(' ')}</span>
+    </h1>
+
+    {
+      portraitPhoto.image && (
+        <Image
+          class="intro-photo"
+          src={portraitPhoto.image}
+          alt={portraitPhoto.alt}
+          widths={[400, 640, 900, 1200]}
+          sizes="(max-width: 48rem) 100vw, 40vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      )
+    }
+
+    <div class="intro-text">
+      <p class="intro-lede">{h.intro}</p>
+      <div class="intro-actions">
+        <CopyEmail email={site.email} label={site.ui.copyEmail} done={site.ui.copied} solid />
+        {hasCv && <a class="button" href={`${base}${site.cv.file}`} download>{site.cv.label}</a>}
+        <a class="button" href={site.linkedin} rel="me">{site.ui.linkedin}</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="skills" aria-labelledby="skills-title">
+    <h2 class="skills-title" id="skills-title">{h.doTitle}</h2>
+    <ul class="skill-list">
+      {
+        h.skills.map((s) => {
+          const m = skillMedia[s.key];
+          return (
+            <li>
+              <a class="skill" href={`${base}${s.path}`}>
+                <h3 class="skill-name">{s.title}</h3>
+                <div class="skill-text">
+                  <p>{s.line}</p>
+                  <p class="skill-proof">{s.proof}</p>
+                </div>
+                {m?.image && (
+                  <Image
+                    class="skill-image"
+                    src={m.image}
+                    alt={m.alt}
+                    widths={[320, 520, 760]}
+                    sizes="(max-width: 48rem) 100vw, 18rem"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <section class="open" aria-labelledby="open-title">
+    <h2 class="open-title" id="open-title">{h.openTitle}</h2>
+    <p class="open-text">{h.open}</p>
+  </section>
+</Shell>
+
+<style>
+  /* Intro: the name stays the loud thing; the photo shows who is behind it. */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'name photo'
+      'text photo';
+    grid-template-rows: auto 1fr;
+    column-gap: var(--gutter);
+    align-items: start;
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(4rem, 9vw, 7rem);
+  }
+
+  .intro-name {
+    grid-area: name;
+    font-family: var(--display);
+    font-size: clamp(2.75rem, 6.3vw, 6.25rem);
+    font-weight: 800;
+    font-stretch: 118%;
+    line-height: 0.86;
+    letter-spacing: -0.025em;
+    margin-left: -0.06em;
+  }
+
+  .intro-line {
+    display: block;
+  }
+
+  .intro-photo {
+    grid-area: photo;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--wash);
+  }
+
+  .intro-text {
+    grid-area: text;
+    max-width: 34rem;
+    margin-top: 2.5rem;
+  }
+
+  .intro-lede {
+    font-size: var(--step-2);
+    line-height: 1.3;
+    text-wrap: pretty;
+  }
+
+  .intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 48rem) {
+    .intro {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'name' 'photo' 'text';
+      row-gap: 1.75rem;
+    }
+    .intro-name {
+      font-size: 12.2vw;
+    }
+    .intro-photo {
+      aspect-ratio: 1;
+      object-position: 50% 25%;
+    }
+    .intro-text {
+      margin-top: 0;
+    }
+    .intro-lede {
+      font-size: var(--step-1);
+    }
+  }
+
+  /* What I do: four rows, each a link to its own page. */
+  .skills-title,
+  .open-title {
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+
+  .skill-list {
+    border-top: 1px solid var(--rule);
+  }
+
+  .skill-list li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .skill {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr) 15rem;
+    column-gap: var(--gutter);
+    align-items: center;
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--ink);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* The title opens up like a fader when you point at it. */
+  .skill-name {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4.6vw, 4rem);
+    font-weight: 750;
+    font-stretch: 100%;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    transition:
+      font-stretch 420ms var(--ease-out),
+      color 200ms ease;
+  }
+
+  .skill-text {
+    max-width: 30rem;
+    text-wrap: pretty;
+  }
+
+  .skill-proof {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+  }
+
+  .skill-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--wash);
+  }
+
+  .skill:focus-visible .skill-name {
+    color: var(--violet);
+    font-stretch: 122%;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .skill:hover .skill-name {
+      color: var(--violet);
+      font-stretch: 122%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skill-name {
+      transition: color 200ms ease;
+    }
+  }
+
+  @media (max-width: 64rem) {
+    .skill {
+      grid-template-columns: minmax(0, 1fr) 12rem;
+      grid-template-areas: 'name image' 'text image';
+      row-gap: 0.75rem;
+    }
+    .skill-name {
+      grid-area: name;
+    }
+    .skill-text {
+      grid-area: text;
+    }
+    .skill-image {
+      grid-area: image;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .skill {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'image' 'name' 'text';
+    }
+    .skill-image {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  .open {
+    margin-top: clamp(4rem, 8vw, 6rem);
+    max-width: 44rem;
+  }
+
+  .open-text {
+    font-size: var(--step-1);
+    line-height: 1.42;
+    text-wrap: pretty;
+  }
+
+  /* One arrival: the name opens up, then the rest settles. */
+  @media (prefers-reduced-motion: no-preference) {
+    .intro-name {
+      animation: open-up 900ms var(--ease-out) both;
+    }
+    .intro-photo {
+      animation: arrive 600ms var(--ease-out) 300ms both;
+    }
+    .intro-text {
+      animation: arrive 500ms var(--ease-out) 500ms both;
+    }
+  }
+
+  @keyframes open-up {
+    from {
+      font-stretch: 62%;
+    }
+  }
+
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+</style>

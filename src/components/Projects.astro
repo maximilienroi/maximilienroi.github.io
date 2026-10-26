@@ -1,0 +1,65 @@
+---
+// Everything in full: the long texts live here, the skill pages link to them.
+import Shell from './Shell.astro';
+import PageHead from './PageHead.astro';
+import Section from './Section.astro';
+import Entry from './Entry.astro';
+import SocietyLog from './SocietyLog.astro';
+import site from '../content/site/en.json';
+import { railMedia } from '../data/media';
+import { getEntries, getLog, grouped } from '../data/content';
+
+const entries = await getEntries();
+const log = await getLog();
+const s = site.sections;
+const p = site.pages.projects;
+---
+
+<Shell title={`${p.title}, ${site.name}`} description={p.description} current="projects/">
+  <PageHead title={p.title} lead={p.lead} />
+
+  {
+    (['production', 'piano', 'social'] as const).map((key) => (
+      <Section id={key} title={s[key].title} intro={s[key].intro} media={railMedia[key]}>
+        {grouped(entries, key).map((g) => (
+          <>
+            {g.title && <h3 class="subhead">{g.title}</h3>}
+            {g.items.map((entry) => (
+              <Entry entry={entry} ui={site.ui} />
+            ))}
+          </>
+        ))}
+      </Section>
+    ))
+  }
+
+  {
+    log.length > 0 && (
+      <Section id="society" title={s.society.title} intro={s.society.intro} media={railMedia.society}>
+        <SocietyLog items={log} lang="en" />
+      </Section>
+    )
+  }
+</Shell>
+
+<style>
+  .subhead {
+    margin: clamp(2.75rem, 5vw, 3.75rem) 0 1.5rem;
+    padding-left: calc(var(--dates) + var(--entry-gap));
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    font-stretch: 112%;
+    color: var(--ink-soft);
+  }
+
+  :global(.section-content) > .subhead:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 36rem) {
+    .subhead {
+      padding-left: 0;
+    }
+  }
+</style>

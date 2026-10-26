@@ -4,13 +4,17 @@ import { render } from 'astro:content';
 import Photo from './Photo.astro';
 import MediaFigure from './MediaFigure.astro';
 import { mediaFor } from '../data/media';
+import { slug } from '../data/slug';
 
 interface Props {
   items: CollectionEntry<'log'>[];
   lang: string;
+  // On the community page only the first paragraph shows, with a link to the full text.
+  excerpt?: boolean;
+  more?: string;
 }
 
-const { items, lang } = Astro.props;
+const { items, lang, excerpt = false, more } = Astro.props;
 const fmt = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : lang, {
   month: 'short',
   year: 'numeric',
@@ -24,14 +28,19 @@ const rows = await Promise.all(
 <ol class="log">
   {
     rows.map(({ item, extra, Content }) => (
-      <li class="log-row">
+      <li class="log-row" id={item.data.title ? slug(item.data.title) : undefined}>
         <time class="log-date ui soft" datetime={item.data.date.toISOString().slice(0, 10)}>
           {item.data.dateLabel ?? fmt.format(item.data.date).replace('Sept', 'Sep')}
         </time>
         <div class="log-main">
           {item.data.title && <h3 class="log-title">{item.data.title}</h3>}
           <div class="log-text">
-            <Content />
+            {excerpt ? <p>{(item.body ?? '').trim().split(/\n\s*\n/)[0]}</p> : <Content />}
+            {excerpt && more && item.data.title && (item.body ?? '').trim().split(/\n\s*\n/).length > 1 && (
+              <p class="log-more ui">
+                <a href={`${more}#${slug(item.data.title)}`}>Read more about {item.data.title.replace(/:.*/, '')}</a>
+              </p>
+            )}
           </div>
           {item.data.link && (
             <a class="log-link ui" href={item.data.link.url}>
@@ -100,6 +109,11 @@ const rows = await Promise.all(
 
   .log-text :global(p + p) {
     margin-top: 0.6em;
+  }
+
+  .log-more {
+    margin-top: 0.75rem;
+    font-weight: 550;
   }
 
   .log-link {
