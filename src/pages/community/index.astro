@@ -1,0 +1,11 @@
+---
+import SkillPage from '../../components/SkillPage.astro';
+import SocietyLog from '../../components/SocietyLog.astro';
+import { getLog } from '../../data/content';
+
+const log = await getLog();
+---
+
+<SkillPage page="community">
+  <SocietyLog items={log} lang="en" />
+</SkillPage>
