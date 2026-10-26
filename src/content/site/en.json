@@ -139,10 +139,149 @@
     "phone": "Phone",
     "basedIn": "Based in",
     "languages": "Languages",
-    "elsewhere": "Elsewhere"
+    "elsewhere": "Elsewhere",
+    "next": "Next"
   },
   "cv": {
     "label": "Download CV",
     "file": "cv/Maximilien-Roi-CV.pdf"
+  },
+  "nav": [
+    {
+      "label": "Production",
+      "path": "production/"
+    },
+    {
+      "label": "Piano",
+      "path": "piano/"
+    },
+    {
+      "label": "Content",
+      "path": "content/"
+    },
+    {
+      "label": "Community",
+      "path": "community/"
+    },
+    {
+      "label": "Projects",
+      "path": "projects/"
+    },
+    {
+      "label": "About",
+      "path": "about/"
+    }
+  ],
+  "home": {
+    "intro": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster.",
+    "doTitle": "What I do",
+    "skills": [
+      {
+        "key": "production",
+        "title": "Production & mixing",
+        "path": "production/",
+        "line": "I write, produce, mix and master in Logic Pro, for my own music as MAXRØ and for group projects.",
+        "proof": "I mixed and mastered Felt Like Home, an EP made by eight students on my course."
+      },
+      {
+        "key": "piano",
+        "title": "Piano & teaching",
+        "path": "piano/",
+        "line": "I started the piano at five, and these days I mostly play jazz, improvise and compose.",
+        "proof": "I've taught beginners online, building each lesson around the songs they wanted to play."
+      },
+      {
+        "key": "content",
+        "title": "Content creation",
+        "path": "content/",
+        "line": "Short piano and music theory videos on TikTok, Instagram and YouTube, as @maxro_cactus.",
+        "proof": "Some of my videos have reached over 300k views."
+      },
+      {
+        "key": "community",
+        "title": "Events & community",
+        "path": "community/",
+        "line": "I co-founded the Westminster Music Society, and I help run The Session.",
+        "proof": "Around 200 students joined the society's community in its first two months."
+      }
+    ],
+    "openTitle": "What I'm looking for",
+    "open": "Studio internships and assistant roles, new piano students, keys for other artists, live or in the studio, and help with music social media or production.",
+    "contactTitle": "Get in touch"
+  },
+  "pages": {
+    "production": {
+      "title": "Production & mixing",
+      "description": "Music production, mixing and mastering by Maximilien Roi (MAXRØ), a pianist and producer in London.",
+      "lead": "I write, produce, mix and master in Logic Pro. Most of my tracks start at the piano, from a chord progression I then build the whole arrangement around.",
+      "lead2": "Alongside my own music as MAXRØ, I compose for film and work on group projects at university, where I like coordinating and getting everyone working together.",
+      "proofsTitle": "Selected work",
+      "items": [
+        "MAXRØ",
+        "Felt Like Home EP",
+        "Behind the fence",
+        "??¿",
+        "perdu",
+        "Soundtrack for a short film",
+        "Solstice"
+      ],
+      "sections": [
+        "production"
+      ],
+      "media": "production",
+      "close": "I'm open to studio internships and assistant roles, and to production or mixing collaborations."
+    },
+    "piano": {
+      "title": "Piano & teaching",
+      "description": "Piano playing and teaching by Maximilien Roi, a pianist and producer in London.",
+      "lead": "I started the piano at five and have played for about 14 years. These days I mostly play jazz, improvise and compose.",
+      "lead2": "I've taught beginners online, building each lesson around the songs they wanted to play, so the theory always came from music they cared about.",
+      "proofsTitle": "Playing and teaching",
+      "items": [
+        "Piano tutor",
+        "Playing the piano",
+        "Drums and guitar"
+      ],
+      "sections": [
+        "piano"
+      ],
+      "media": "piano",
+      "close": "I'm taking on new piano students, and I'm happy to play keys for other artists, live or in the studio."
+    },
+    "content": {
+      "title": "Content creation",
+      "description": "Piano and music theory videos by Maximilien Roi (@maxro_cactus), and social media work.",
+      "lead": "I make short piano and music theory videos on TikTok, Instagram and YouTube as @maxro_cactus, and some have reached over 300k views.",
+      "lead2": "I've also run the social media for a podcast as part of a team of four, as a university project.",
+      "proofsTitle": "Accounts and projects",
+      "items": [
+        "@maxro_cactus",
+        "Amplify Podcast"
+      ],
+      "sections": [
+        "social"
+      ],
+      "media": "social",
+      "close": "I'm open to helping music artists and projects with their social media."
+    },
+    "community": {
+      "title": "Events & community",
+      "description": "The Westminster Music Society, co-founded by Maximilien Roi, and The Session.",
+      "lead": "I co-founded the Westminster Music Society with Jasper Hazel in September 2026, and I'm its President. The idea is to get music students from every year and course to meet, play and make things together.",
+      "lead2": "I also help at The Session with hosting, lights and sound, and I've played keys in some of its sets.",
+      "proofsTitle": "What we've done so far",
+      "media": "society",
+      "close": "If you'd like to work together on an event or a music project, I'd be glad to hear from you."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Every project by Maximilien Roi in full: production, piano, content and the Music Society.",
+      "lead": "Everything in full, with the details: my music, teaching, videos and the Music Society."
+    },
+    "about": {
+      "title": "About",
+      "description": "About Maximilien Roi: studies, work and how I organise my work.",
+      "lead": "Pianist and producer in London, in my second year of Music Production, Performance and Business at the University of Westminster. Most of what I enjoy comes back to bringing people together around music."
+    }
   }
 }
