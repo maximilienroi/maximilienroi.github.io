@@ -28,6 +28,7 @@ const btfCover = img('behind-the-fence-cover-v1.jpg');
 const mamanCover = img('maman-je-saigne-cover.jpg');
 const chezLui = img('chez-lui.jpg');
 const brainGraph = img('external-brain-graph.jpg');
+const portrait = img('max-portrait.jpg');
 
 export type Media =
   | { kind: 'image'; image: ImageMetadata | undefined; alt: string; caption?: string }
@@ -40,9 +41,28 @@ export const heroPhoto: { image: ImageMetadata | undefined; alt: string } = {
   alt: 'Maximilien Roi as MAXRØ, wearing his mask, in front of a painted wall',
 };
 
+// Home page: a plain portrait first, so visitors see who I am.
+export const portraitPhoto: { image: ImageMetadata | undefined; alt: string } = {
+  image: portrait,
+  alt: 'Maximilien Roi in a park, in front of a willow tree and stone columns',
+};
+
+// Home page: one picture per thing I do, linking to its page.
+export const skillMedia: Record<string, { image: ImageMetadata | undefined; alt: string }> = {
+  production: { image: mask, alt: 'Maximilien as MAXRØ, wearing his mask, in front of a painted wall' },
+  piano: { image: atThePiano, alt: 'Maximilien playing a grand piano in a studio' },
+  content: { image: stealPoster, alt: 'A Steal These Chords video: chords shown as falling notes above a keyboard' },
+  community: { image: sessionBandPoster, alt: 'A band on stage at The Session, with Maximilien on keys' },
+};
+
 // Shown under each section's title, in the left column.
 const railMediaAll: Record<string, Media[]> = {
   production: [
+    {
+      kind: 'image',
+      image: mask,
+      alt: 'Maximilien as MAXRØ, wearing his mask, in front of a painted wall',
+    },
     {
       kind: 'image',
       image: drawing,
