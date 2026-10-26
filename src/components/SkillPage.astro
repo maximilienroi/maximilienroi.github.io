@@ -26,7 +26,7 @@ const next = skills[(i + 1) % skills.length];
     <h1 class="lead-title">{p.title}</h1>
     <div class="lead-text">
       <p>{p.lead}</p>
-      <p>{p.lead2}</p>
+      {p.lead2 && <p>{p.lead2}</p>}
     </div>
   </header>
 
