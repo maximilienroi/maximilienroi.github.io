@@ -1,6 +1,6 @@
 ---
 title: "Socials, and what's next"
-order: 4
+order: 5
 date: "2026-10-21"
 dateLabel: "Late Oct 2026"
 ---
