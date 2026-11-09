@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><body>bridge<script>
+const base='https://raw.githubusercontent.com/maximilienroi/maximilienroi.github.io/ig-assets/';
+window.addEventListener('message', async (e)=>{
+  if(!e.data || e.data.type!=='igload') return;
+  const out=[];
+  for(const p of e.data.paths){ const r=await fetch(base+p); out.push({name:p.replace('/','_'), buf:await r.arrayBuffer()}); }
+  e.source.postMessage({type:'igfiles', id:e.data.id, files:out}, '*', out.map(o=>o.buf));
+});
+parent.postMessage({type:'igready'}, '*');
+</script>
