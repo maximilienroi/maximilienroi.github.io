@@ -3,7 +3,7 @@
 Usage: IG_TOKEN=... python3 publish.py post1 [--dry]"""
 import json, os, sys, time, urllib.parse, urllib.request
 IG = "17841424241521889"; API = "https://graph.facebook.com/v21.0"
-BASE = "https://raw.githubusercontent.com/maximilienroi/maximilienroi.github.io/ig-assets/ms"
+BASE = os.environ.get("MS_BASE", "https://raw.githubusercontent.com/maximilienroi/maximilienroi.github.io/ig-assets/ms")
 COUNTS = {"post1": 6, "post2": 10, "post3": 4, "post4": 10}
 TOK = os.environ["IG_TOKEN"]
 def call(path, **p):
