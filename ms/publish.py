@@ -35,5 +35,11 @@ print("carousel container ready", car)
 if dry: sys.exit("dry run: not published")
 mid = call(f"{IG}/media_publish", creation_id=car)["id"]
 print("PUBLISHED", mid, get(mid, fields="permalink").get("permalink"))
-st = call(f"{IG}/media", media_type="STORIES", image_url=urls[0])["id"]; wait(st)
+# Story = "repost" look (post card on blurred background), Max's request 10/11/2026
+story_url = f"{BASE}/{post}/story.jpg"
+try:
+    urllib.request.urlopen(urllib.request.Request(story_url, method="HEAD"), timeout=30)
+except Exception:
+    story_url = urls[0]
+st = call(f"{IG}/media", media_type="STORIES", image_url=story_url)["id"]; wait(st)
 print("STORY", call(f"{IG}/media_publish", creation_id=st)["id"])
