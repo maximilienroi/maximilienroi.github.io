@@ -11,4 +11,4 @@ links:
 ---
 I started the piano at five. From 5 to 12 I had lessons with Fernando, and with him I played in the Steinway piano competitions in Paris. From 13 to 16 I studied with David Aboab. Since 16 I've mostly taught myself, with occasional lessons with Adrian York.
 
-My approach is a little unconventional: I learn mostly by ear, and use the theory I know to understand what I'm hearing. These days I'm mostly into jazz, harmony, improvising and composing my own pieces, which often end up as tracks or videos.
+My approach is a little unconventional: I learn mostly by ear, and use the theory I know to understand what I'm hearing. These days I play a bit of everything, and I spend a lot of time on harmony, improvising and composing my own pieces, which often end up as tracks or videos.
