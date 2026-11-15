@@ -1,7 +1,7 @@
 ---
 section: "social"
 title: "@maxro_piano"
-where: "TikTok, Instagram and YouTube"
+where: "TikTok, Instagram, YouTube and Facebook"
 dates: "Mar 2025 – now"
 sortDate: "2025-03-01"
 order: 1
