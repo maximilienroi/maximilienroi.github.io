@@ -1,13 +1,13 @@
 ---
 section: "social"
-title: "@maxro_cactus"
+title: "@maxro_piano"
 where: "TikTok, Instagram and YouTube"
 dates: "Mar 2025 – now"
 sortDate: "2025-03-01"
 order: 1
 links:
-  - { label: "TikTok", url: "https://www.tiktok.com/@maxro_cactus" }
-  - { label: "Instagram", url: "https://www.instagram.com/maxro_cactus/" }
+  - { label: "TikTok", url: "https://www.tiktok.com/@maxro_piano" }
+  - { label: "Instagram", url: "https://www.instagram.com/maxro_piano/" }
   - { label: "YouTube", url: "https://www.youtube.com/@maxro_cactus" }
 ---
 Short piano and music theory videos in a few recurring formats: the easiest chords for beginners, Steal These Chords, Learning Jazz Standards, and a lot of my own compositions, with videos reaching over 300k views.
