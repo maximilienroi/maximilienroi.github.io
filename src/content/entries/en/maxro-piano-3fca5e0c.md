@@ -9,6 +9,7 @@ links:
   - { label: "TikTok", url: "https://www.tiktok.com/@maxro_piano" }
   - { label: "Instagram", url: "https://www.instagram.com/maxro_piano/" }
   - { label: "YouTube", url: "https://www.youtube.com/@maxro_piano" }
+  - { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61596477333857" }
 ---
 Short piano and music theory videos in a few recurring formats: the easiest chords for beginners, Steal These Chords, Learning Jazz Standards, and a lot of my own compositions, with videos reaching over 300k views.
 
