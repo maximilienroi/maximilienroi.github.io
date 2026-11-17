@@ -41,6 +41,10 @@
     {
       "label": "YouTube",
       "url": "https://www.youtube.com/@maxro_piano"
+    },
+    {
+      "label": "Facebook",
+      "url": "https://www.facebook.com/profile.php?id=61596477333857"
     }
   ],
   "sections": {
@@ -84,7 +88,7 @@
     },
     "social": {
       "title": "Social media",
-      "intro": "I share piano and music theory on TikTok, Instagram and YouTube, and I've run the social media for a podcast as a university project."
+      "intro": "I share piano and music theory on TikTok, Instagram, YouTube and Facebook, and I've run the social media for a podcast as a university project."
     },
     "society": {
       "title": "Music Society & events",
@@ -190,7 +194,7 @@
         "key": "content",
         "title": "Content creation",
         "path": "content/",
-        "line": "Short piano and music theory videos on TikTok, Instagram and YouTube, as @maxro_piano.",
+        "line": "Short piano and music theory videos on TikTok, Instagram, YouTube and Facebook, as @maxro_piano.",
         "proof": "Some of my videos have reached over 300k views."
       },
       {
