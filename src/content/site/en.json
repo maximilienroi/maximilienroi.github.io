@@ -32,15 +32,15 @@
     },
     {
       "label": "TikTok",
-      "url": "https://www.tiktok.com/@maxro_cactus"
+      "url": "https://www.tiktok.com/@maxro_piano"
     },
     {
       "label": "Instagram",
-      "url": "https://www.instagram.com/maxro_cactus/"
+      "url": "https://www.instagram.com/maxro_piano/"
     },
     {
       "label": "YouTube",
-      "url": "https://www.youtube.com/@maxro_cactus"
+      "url": "https://www.youtube.com/@maxro_piano"
     }
   ],
   "sections": {
@@ -190,7 +190,7 @@
         "key": "content",
         "title": "Content creation",
         "path": "content/",
-        "line": "Short piano and music theory videos on TikTok, Instagram and YouTube, as @maxro_cactus.",
+        "line": "Short piano and music theory videos on TikTok, Instagram and YouTube, as @maxro_piano.",
         "proof": "Some of my videos have reached over 300k views."
       },
       {
@@ -246,12 +246,12 @@
     },
     "content": {
       "title": "Content creation",
-      "description": "Piano and music theory videos by Maximilien Roi (@maxro_cactus), and social media work.",
+      "description": "Piano and music theory videos by Maximilien Roi (@maxro_piano), and social media work.",
       "lead": "Short piano and music theory videos of my own, and social media for other projects.",
       "lead2": "",
       "proofsTitle": "Accounts and projects",
       "items": [
-        "@maxro_cactus",
+        "@maxro_piano",
         "Amplify Podcast"
       ],
       "sections": [
