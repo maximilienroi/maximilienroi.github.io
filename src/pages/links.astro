@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/media/max-at-the-piano.jpg';
+import site from '../content/site/en.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const url = (label: string) => site.socials.find((s) => s.label === label)?.url ?? '';
+
+const groups = [
+  {
+    title: 'Listen',
+    links: [
+      { label: 'Spotify', note: 'MAXRØ releases', href: url('Spotify') },
+      { label: 'SoundCloud', note: 'MAXRØ', href: url('SoundCloud') },
+    ],
+  },
+  {
+    title: 'Piano videos',
+    links: [
+      { label: 'Instagram', note: '@maxro_piano', href: url('Instagram') },
+      { label: 'TikTok', note: '@maxro_piano', href: url('TikTok') },
+      { label: 'YouTube', note: '@maxro_piano', href: url('YouTube') },
+      { label: 'Facebook', note: 'MAXRØ Piano', href: url('Facebook') },
+    ],
+  },
+  {
+    title: 'Work with me',
+    links: [
+      { label: 'Website', note: 'portfolio', href: base },
+      { label: 'LinkedIn', note: 'Maximilien Roi', href: url('LinkedIn') },
+      { label: 'CV', note: 'PDF', href: `${base}cv/Maximilien-Roi-CV.pdf` },
+      { label: 'Email', note: site.email, href: `mailto:${site.email}` },
+    ],
+  },
+];
+---
+
+<Base
+  lang="en"
+  title="Links, MAXRØ (Maximilien Roi)"
+  description="All of Maximilien Roi's links: music as MAXRØ, piano videos @maxro_piano, portfolio, LinkedIn and contact."
+  name={site.name}
+  socials={site.socials}
+>
+  <main class="links">
+    <header>
+      <Image src={portrait} alt="Maximilien Roi at the piano" width={176} height={176} class="avatar" />
+      <h1>MAXRØ</h1>
+      <p>Maximilien Roi, pianist and producer in London.</p>
+    </header>
+
+    {groups.map((g) => (
+      <section>
+        <h2>{g.title}</h2>
+        <ul>
+          {g.links.map((l) => (
+            <li>
+              <a href={l.href} rel={l.href.startsWith('http') ? 'me noopener' : undefined}>
+                <span class="label">{l.label}</span>
+                <span class="note">{l.note}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .links {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vw, 4.5rem) var(--gutter) 4rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .avatar {
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: var(--step-3);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  header p {
+    font-family: var(--text);
+    color: var(--ink-soft);
+    margin: 0.4rem 0 0;
+  }
+  section + section {
+    margin-top: 2rem;
+  }
+  h2 {
+    font-family: var(--text);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--step-0);
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  li {
+    border-bottom: 1px solid var(--rule);
+  }
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.95rem 0.25rem;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 160ms var(--ease-out), padding 160ms var(--ease-out);
+  }
+  .label {
+    font-family: var(--display);
+    font-size: var(--step-1);
+  }
+  .note {
+    font-family: var(--text);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    text-align: right;
+  }
+  @media (hover: hover) {
+    a:hover {
+      color: var(--violet);
+      padding-left: 0.6rem;
+    }
+  }
+  a:focus-visible {
+    outline: 2px solid var(--violet);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a { transition: none; }
+    a:hover { padding-left: 0.25rem; }
+  }
+</style>
