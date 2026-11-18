@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import autolink from './integrations/autolink.mjs';
 
 // SITE and BASE are set by the GitHub Pages workflow (from the repository
 // settings), so the site works whatever the repository or domain is called.
@@ -12,7 +13,7 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap(), autolink()],
   build: { inlineStylesheets: 'always' },
   image: { layout: 'constrained', responsiveStyles: true },
 });

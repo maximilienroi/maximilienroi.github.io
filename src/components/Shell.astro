@@ -40,9 +40,6 @@ const year = new Date().getFullYear();
       <div class="footer-contact" id="contact">
         <h2 class="footer-title">{site.home.contactTitle}</h2>
         <a class="footer-email" href={`mailto:${site.email}`}>{site.email}</a>
-        <p class="footer-phone">
-          <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>
-        </p>
         <ul class="footer-socials ui">
           {
             site.socials.map((s) => (
@@ -156,17 +153,6 @@ const year = new Date().getFullYear();
     text-underline-offset: 0.14em;
   }
 
-  .footer-phone {
-    margin-top: 0.75rem;
-    font-family: var(--display);
-    font-size: var(--step-1);
-    font-weight: 550;
-    font-variant-numeric: lining-nums;
-  }
-
-  .footer-phone a {
-    color: var(--ink);
-  }
 
   .footer-socials {
     display: flex;
