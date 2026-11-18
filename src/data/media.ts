@@ -18,6 +18,7 @@ const childShowroom = img('max-piano-child-showroom.jpg');
 const directory = img('musician-directory-blurred.jpg');
 const sessionBandPoster = img('session-band-poster.jpg');
 const sessionPoisonPoster = img('session-poison-poster.jpg');
+const sessionNov18Poster = img('session-nov-18-poster.jpg');
 const pianoVideoPoster = img('piano-video-poster.jpg');
 const stealPoster = img('steal-these-chords-17-poster.jpg');
 const nardisPoster = img('nardis-poster.jpg');
@@ -114,6 +115,13 @@ const railMediaAll: Record<string, Media[]> = {
       poster: sessionPoisonPoster,
       alt: 'Poison performed on stage at The Session, with Maximilien on keys, a singer and a drummer',
       caption: 'Poison, live at The Session, with me on keys.',
+    },
+    {
+      kind: 'video',
+      src: 'media/session-nov-18.mp4',
+      poster: sessionNov18Poster,
+      alt: 'A five-piece band playing two songs on stage at The Session, with Maximilien on keys',
+      caption: 'Two songs live at The Session, November 2026, with me on keys.',
     },
   ],
   also: [],
