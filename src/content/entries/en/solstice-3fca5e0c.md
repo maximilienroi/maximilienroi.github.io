@@ -9,3 +9,5 @@ university: true
 A group project in which we plan and put on a live indie-electronic show from scratch, to learn how live music is actually organised: finding and booking a venue, the technical setup, the running order and the promotion.
 
 I'm the keyboard player and one of the composers, and I also help with the coordination and the artistic direction of the show. We have our venue now, Area 51 at the university, and the show takes place there on 7 December. We're also writing an original song so the show has material of its own. For our staging presentation I made a 3D model of the stage with Claude, in Blender, which I don't know myself, with the lighting moving from orange to purple to blue, so the whole group could see what the show could look like.
+
+In November I wrote our tech rider for the venue's technical team, then booked Area 51 for a full-band rehearsal, where we checked every connection, got the bass player's MIDI rig working and ran a full soundcheck, so I now feel ready to set up the stage on the day.
